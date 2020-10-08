@@ -183,6 +183,9 @@ PARLER_LANGUAGES = {
     }
 }
 
+SITE_ROOT = os.path.dirname(os.path.realpath(__name__))
+LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True

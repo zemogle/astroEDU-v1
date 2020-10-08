@@ -9,6 +9,8 @@ from django.views.generic import TemplateView, RedirectView
 from smartpages.views import SmartPageView
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
+from django.conf.urls.i18n import i18n_patterns
+
 
 from activities.models import Activity, Collection
 from search.views import simplesearch
@@ -20,6 +22,10 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path('admin/', admin.site.urls)
+    ]
+
+urlpatterns += i18n_patterns(
     path('', home, name='home'),
     path('search/', simplesearch, name='search'),
     # path('^testing/', include('astroedu.testing.urls', namespace='testing')),
@@ -29,12 +35,10 @@ urlpatterns = [
 
     path('admin/about/', about, name='about'),
     # path('admin/history/', include('djangoplicity.adminhistory.urls', namespace='adminhistory_site')),
-    path('admin/', admin.site.urls),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage')
-
-]
+)
 
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

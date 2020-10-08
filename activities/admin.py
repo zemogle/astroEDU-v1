@@ -362,6 +362,11 @@ class JourneyAdmin(TranslatableAdmin):
 
     list_display = ('title', 'published')
 
+
+
+admin.site.site_header = "astroEDU Admin"
+admin.site.site_title = "astroEDU Admin Portal"
+
 admin.site.register(JourneyCategory, JourneyAdmin)
 admin.site.register(MetadataOption, MetadataOptionAdmin)
 admin.site.register(Activity, ActivityAdmin)

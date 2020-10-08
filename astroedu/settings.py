@@ -172,7 +172,7 @@ LANGUAGES = (
 # LANGUAGES = sorted(LANGUAGES, key=operator.itemgetter(0))
 
 PARLER_LANGUAGES = {
-    1: (
+    None: (
         {'code': 'en'},
         {'code': 'it'},
         {'code': 'kr'},
@@ -182,6 +182,8 @@ PARLER_LANGUAGES = {
         'hide_untranslated': True,   # False is the default; let .active_translations() return fallbacks too.
     }
 }
+
+ADMIN_SITE_TITLE  = 'astroEDU admin'
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__name__))
 LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )

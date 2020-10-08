@@ -1,0 +1,35 @@
+{% load static easy_thumbnails_tags i18n %}
+	<div class="featured_item">
+		<!-- <div class="title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></div> -->
+		<div class="title"><a href="{% url 'activities:detail' code=object.code slug=object.slug %}">{{ object.title }}</a></div>
+		<div class="metadata">
+			DATE: <b>{{ object.release_date|date:"Y-m-d" }}</b>
+			<!-- <img src="{% static 'designimages/metaseparator.png' %}"/></a> --><br/>
+			BY:  <b>{{ object.author_list }}</b>
+		</div>
+		<div class="image"><a href="{% url 'activities:detail' code=object.code slug=object.slug %}"><img src="{{ object.main_visual|thumbnail_url:'thumb'}}" alt="{{ object.title }} Activity" /></a></div>
+
+		<div class="description"><p>{{ object.teaser }}</p></div>
+		<div class="metadata_bottom">
+
+			<div class="col">
+				<div class="caption">{% trans "Theme" %}</div>
+				<div class="value">{{ object.theme }}</div>
+			</div>
+
+			<div class="col">
+				<div class="caption">{% trans "Age" %}</div>
+				<div class="value">{{ object.age_range }}</div>
+			</div>
+
+			<div class="activity-link">
+				<a href="{% url 'activities:detail' code=object.code slug=object.slug %}">
+					<img src="{% static 'designimages/arrow_next.svg' %}" alt="View activity" />
+				</a>
+			</div>
+
+			<div style="clear: both"></div>
+
+		</div>
+
+	</div>

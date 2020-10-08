@@ -1,0 +1,428 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-07 14:01+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: activities/admin.py:119
+msgid "Markdown error"
+msgstr ""
+
+#: astroedu/search/templates/search/search.html:14
+#: astroedu/search/templates/search/simplesearch.html:14
+msgid "Search results"
+msgstr "Risultati della ricerca"
+
+#: astroedu/search/templates/search/search.html:29
+#: astroedu/search/templates/search/search.html:42
+#: astroedu/search/templates/search/simplesearch.html:29
+#: astroedu/search/templates/search/simplesearch.html:42
+msgid "No results found!"
+msgstr "Non ho trovato nessun risultato!"
+
+#: astroedu/search/templates/search/search.html:51
+#: astroedu/search/templates/search/simplesearch.html:51
+msgid "Filters"
+msgstr "Filtri"
+
+#: astroedu/templates/astroedu/featured.html:4
+#: templates/astroedu/featured.html:4
+msgid "Featured Activities"
+msgstr "In evidenza"
+
+#: astroedu/templates/astroedu/featured_item.html:17
+#: templates/activities/activity_list_item.html:21
+#: templates/astroedu/featured_item.html:17
+msgid "Theme"
+msgstr "Tema"
+
+#: astroedu/templates/astroedu/featured_item.html:22
+#: templates/activities/activity_list_item.html:30
+#: templates/astroedu/featured_item.html:22
+msgid "Age"
+msgstr "Età"
+
+#: astroedu/templates/astroedu/home.html:27 templates/astroedu/home.html:27
+#: templates/base.html:42
+msgid "apply as volunteer"
+msgstr ""
+
+#: astroedu/templates/astroedu/home.html:27 templates/astroedu/home.html:27
+#: templates/base.html:42
+msgid "Join us"
+msgstr "Unisciti a noi"
+
+#: astroedu/templates/astroedu/home.html:27 templates/astroedu/home.html:27
+#: templates/base.html:42
+msgid "Volunteer"
+msgstr "Volontari"
+
+#: astroedu/templates/astroedu/home.html:41 templates/astroedu/home.html:41
+msgid "Peer-reviewed"
+msgstr "Astronomia peer reviewed"
+
+#: astroedu/templates/astroedu/home.html:41 templates/astroedu/home.html:41
+msgid "astronomy education activities"
+msgstr "attività didattiche"
+
+#: astroedu/templates/astroedu/search_form.html:4
+#: templates/astroedu/search_form.html:4 templates/base.html:178
+msgid "Find Educational Activities"
+msgstr "trova le attività"
+
+#: astroedu/templates/astroedu/search_form.html:5
+#: djangoplicity/adminhistory/templates/admin/adminhistory/list.html:15
+#: templates/astroedu/search_form.html:5
+msgid "Search"
+msgstr "Cerca"
+
+#: django_ext/models/spaceawe.py:15 django_ext/models/spaceawe.py:16
+msgid "News"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:17
+msgid "Latest updates about Space Awareness"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:21
+msgid "Careers"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:22
+msgid "Discover space careers"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:23
+msgid "Become a space explorer"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:24
+msgid ""
+"Aiming for the stars? See how you can contribute to space science and "
+"exploration."
+msgstr ""
+
+#: django_ext/models/spaceawe.py:27
+msgid "Read"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:28
+msgid "Read Space Scoops"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:29
+msgid "News from across the Universe"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:30
+msgid "The latest discoveries about the Universe."
+msgstr ""
+
+#: django_ext/models/spaceawe.py:33
+msgid "Participate"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:34
+msgid "Play & participate"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:35
+msgid "Apps and projects for space exploration"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:36
+msgid "Some great apps and projects to take part in real research programmes."
+msgstr ""
+
+#: django_ext/models/spaceawe.py:39
+msgid "Educate"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:40
+msgid "Educate & inspire"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:41
+#, fuzzy
+#| msgid "Find Educational Activities"
+msgid "Peer-reviewed educational activities"
+msgstr "trova le attività"
+
+#: django_ext/models/spaceawe.py:42
+msgid "Some of the best resources for educators about space."
+msgstr ""
+
+#: django_ext/models/spaceawe.py:45
+msgid "Develop"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:46
+msgid "Develop teaching skills"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:47
+msgid "Bringing space to education"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:48
+msgid "Guidelines to best use Space Awareness with 8 to 18 year olds."
+msgstr ""
+
+#: django_ext/models/spaceawe.py:51
+msgid "Know us"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:52
+msgid "Get to know us"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:53
+msgid "Vision and team behind Space Awareness"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:54
+msgid "Who is behind Space Awareness? Is there a contact in my country?"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:60
+msgid "Space Exploration"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:61
+msgid "Our wonderful Universe"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:62
+msgid "Space sciences and exploration"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:63
+msgid "Get inspired by the beauty and vastness of the Universe"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:66
+msgid "Earth Observation"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:67
+msgid "Our fragile planet"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:68
+msgid "Earth from above"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:69
+msgid "The Earth, our unique and fragile home"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:72
+#, fuzzy
+#| msgid "Citation"
+msgid "Navigation"
+msgstr "Citazione"
+
+#: django_ext/models/spaceawe.py:73
+msgid "Navigation through the ages"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:74
+msgid "Global discovery & mobility"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:75
+msgid "Trace the history of navigation from the first explorers to GPS"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:78 django_ext/models/spaceawe.py:80
+msgid "Islamic heritage"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:79
+msgid "The journey of ideas"
+msgstr ""
+
+#: django_ext/models/spaceawe.py:81
+msgid "Building a bridge between the Islamic world and Europe"
+msgstr ""
+
+#: smartpages/forms.py:23
+msgid "URL is missing a leading slash."
+msgstr ""
+
+#: smartpages/forms.py:30
+msgid "URL is missing a trailing slash."
+msgstr ""
+
+#: smartpages/models.py:28
+msgid "registration required"
+msgstr ""
+
+#: templates/404.html:7
+msgid "404, Page not found."
+msgstr ""
+
+#: templates/500.html:7
+msgid "Something went wrong."
+msgstr "Ops, qualcosa è andato storto"
+
+#: templates/activities/activity_detail.html:21
+#: templates/activities/collection_detail.html:13
+msgid "Edit"
+msgstr ""
+
+#: templates/activities/activity_detail.html:22
+#: templates/activities/collection_detail.html:14
+msgid "Delete"
+msgstr ""
+
+#: templates/activities/activity_detail.html:23
+#: templates/activities/collection_detail.html:15
+msgid "History"
+msgstr ""
+
+#: templates/activities/activity_detail.html:24
+#: templates/activities/collection_detail.html:16
+msgid "Add another"
+msgstr ""
+
+#: templates/activities/activity_detail.html:25
+#: templates/activities/collection_detail.html:17
+msgid "Manage"
+msgstr ""
+
+#: templates/activities/activity_detail.html:91
+msgid "Attachments"
+msgstr "Allegati"
+
+#: templates/activities/activity_detail.html:104
+msgid "All Attachments"
+msgstr "Tutti gli allegati"
+
+#: templates/activities/activity_detail.html:111
+msgid "Downloads"
+msgstr "Downloads"
+
+#: templates/activities/activity_detail.html:119
+msgid "Share"
+msgstr "Condividi"
+
+#: templates/activities/activity_detail.html:145
+msgid "Repositories"
+msgstr "Archivi"
+
+#: templates/activities/activity_detail.html:155
+msgid "Citation"
+msgstr "Citazione"
+
+#: templates/activities/activity_detail.html:163
+msgid "Acknowledgement"
+msgstr "Ringraziamenti"
+
+#: templates/activities/activity_list_item.html:39
+msgid "Time"
+msgstr "Durata"
+
+#: templates/activities/collection_list.html:4
+#: templates/activities/collection_list.html:11 templates/base.html:66
+msgid "Activity Collections"
+msgstr "Attività a tema"
+
+#: templates/activities/collection_list.html:21
+msgid "No collections are available."
+msgstr "Non ci sono attività a tema"
+
+#: templates/admin/base_site.html:4
+msgid "Django site admin"
+msgstr ""
+
+#: templates/admin/base_site.html:12
+msgid "Administration"
+msgstr ""
+
+#: templates/base.html:18
+msgid "This site uses cookies to offer you a better browsing experience."
+msgstr ""
+"Questo sito usa dei cookied per offrirvi una migliore navigazione in rete. "
+"Leggi come utilizziamo i cookies."
+
+#: templates/base.html:18
+msgid "Read about how we use cookies."
+msgstr "Leggi come utilizziamo i cookies."
+
+#: templates/base.html:78
+msgid "See All Activities"
+msgstr "Vedi tutte le attività"
+
+#: templates/base.html:90
+msgid "Submit Your Activities"
+msgstr "Sottometti la tua attività"
+
+#: templates/base.html:105
+msgid "Language"
+msgstr ""
+
+#: templates/base.html:107
+msgid "Submission"
+msgstr "Inviare un'attività"
+
+#: templates/base.html:108
+msgid "Peer Review"
+msgstr ""
+
+#: templates/base.html:109
+msgid "Enquiry"
+msgstr "Modello di apprendimento"
+
+#: templates/base.html:110
+msgid "FAQ"
+msgstr ""
+
+#: templates/base.html:127
+msgid "About"
+msgstr "Chi siamo"
+
+#: templates/base.html:128
+msgid "Workflow"
+msgstr "Flusso di lavoro"
+
+#: templates/base.html:129
+msgid "Blog"
+msgstr ""
+
+#: templates/base.html:130
+msgid "Contact"
+msgstr "Contatti"
+
+#: templates/base.html:178
+msgid "Black holes"
+msgstr "buchi neri"
+
+#: templates/base.html:178
+msgid "Galaxies"
+msgstr "galassie"
+
+#: templates/base.html:178
+msgid "Drawing"
+msgstr "disegni"
+
+#: templates/base.html:178
+msgid "Primary School"
+msgstr "scuola primaria"
+
+#~| msgid "astronomy education activities"
+#~ msgid "Find Education Activities"
+#~ msgstr "attività didattiche"

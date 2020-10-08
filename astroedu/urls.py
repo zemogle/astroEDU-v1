@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    url(r'^(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage')
+    url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage')
 
 ]
 

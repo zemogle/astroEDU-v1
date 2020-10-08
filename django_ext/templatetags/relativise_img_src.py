@@ -3,7 +3,7 @@ import re
 from django import template
 from django.utils.safestring import mark_safe
 from django.conf import settings
-from sorl.thumbnail import get_thumbnail
+from easy_thumbnails.files import get_thumbnailer
 
 register = template.Library()
 
@@ -18,7 +18,8 @@ def _relativise(value, activity, constraint=None):
             if media_root[:-1] != '/':
                 media_root += '/'
             path = new_src.replace(settings.MEDIA_URL, media_root)
-            resized = get_thumbnail(path, constraint, upscale=False)
+            thumbnailer = get_thumbnailer(path)
+            resized = thumbnailer.get_thumbnail(contraint)
             new_src = resized.url
         result += value[new_start:m.start()] + '<img src="%s"/>' % new_src
         new_start = m.end()

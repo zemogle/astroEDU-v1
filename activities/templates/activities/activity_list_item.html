@@ -1,4 +1,4 @@
-{% load i18n static thumbnail %}
+{% load i18n static easy_thumbnails_tags %}
     <div class="list_item{% if not object.is_released%} unpublished{% endif %}">
 
     	<div class="title"><a href="{% url 'activities:detail' code=object.code slug=object.slug %}">{{ object.title }}</a></div>
@@ -10,8 +10,8 @@
         </div>
 
         <div class="description">
-            {% if object.main_visual %}{% thumbnail object.main_visual 500x269 crop as im %}
-            <a href="{% url 'activities:detail' code=object.code slug=object.slug %}"><img src="{{ im.url }}" alt="{{object.title}}" /></a>{% endif %}
+            {% if object.main_visual %}
+            <a href="{% url 'activities:detail' code=object.code slug=object.slug %}"><img src="{{ object.main_visual.url }}?q=6976" alt="{{object.title}}" /></a>{% endif %}
             <div class="list_item_short">{{ object.teaser }}</div>
         </div>
 

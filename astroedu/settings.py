@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'institutions',
     'activities',
     'filemanager',
-    'astroedu',
+    'astroedu'
 ]
 
 MIDDLEWARE = [
@@ -215,7 +215,7 @@ DEFAULT_FILE_STORAGE = 'astroedu.settings.DefaultStorageClass'
 
 THUMBNAIL_DEFAULT_STORAGE  = DEFAULT_FILE_STORAGE
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join('/data/media/')
 
 THUMBNAIL_ALIASES = {

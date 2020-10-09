@@ -226,3 +226,17 @@ THUMBNAIL_ALIASES = {
         'logo': {'size': (180, 180), 'crop': 'scale'},
         },
 }
+
+BLEACH_ALLOWED_TAGS = ('sup', 'sub', 'br', )
+BLEACH_ALLOWED_ATTRIBUTES = {}
+BLEACH_ALLOWED_STYLES = {}
+
+# Mistune
+MISTUNE_STYLES = {
+    # 'escape': True,  # all raw html tags will be escaped.
+    # 'hard_wrap': True,  # it will has GFM line breaks feature.
+    'use_xhtml': True,  # all tags will be in xhtml, for example: <hr />.
+    # 'parse_html': True,  # parse text in block level html.
+    # 'skip_style': True,
+    # 'skip_html': True,
+}

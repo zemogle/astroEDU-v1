@@ -92,7 +92,7 @@
 			</div>
 
 			<div class="bigicon">
-				<a href="/{{ LANGUAGE_CODE }}/submission/">
+				<a href="{% smartpage_url 'submission' %}">
 					<img src="
 					{% if LANGUAGE_CODE == 'en' %}
 						{% static 'designimages/bigicon_submit.svg' %}

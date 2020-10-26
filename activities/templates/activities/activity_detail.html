@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static easy_thumbnails_tags i18n markdown getattribute relativise_img_src%}
+{% load static easy_thumbnails_tags i18n martortags getattribute relativise_img_src%}
 
 {% block site_title %}{{ object.title }} | astroEDU {% endblock %}
 
@@ -70,7 +70,7 @@
     {% if object.code == '1302' %} <!-- Scientix Award --> <div><a href="https://medium.com/@iauastroedu/iau-astroedu-honoured-with-science-education-award-95437e356d50" class="award_badge" target="_blank"><img src="{% static 'designimages/award_badge.png' %}" alt="Scientix Award" /></a></div>{% endif %}
 
 	{% for section in sections %}
-		{% include 'activities/activity_detail_section.html' with code=section.0 text=section.1 content=object|getattribute:section.0|markdown|relativise_img_src:object %}
+		{% include 'activities/activity_detail_section.html' with code=section.0 text=section.1 content=object|getattribute:section.0|safe_markdown|relativise_img_src:object %}
 	{% endfor %}
 
 </div>

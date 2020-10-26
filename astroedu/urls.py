@@ -14,7 +14,8 @@ from django.conf.urls.i18n import i18n_patterns
 
 from activities.models import Activity, Collection
 from search.views import simplesearch
-from activities.views import home, about, CollectionListView, CollectionDetailView
+from activities.views import home, about, CollectionListView, CollectionDetailView, markdown_uploader
+
 
 sitemaps = {
     'activities': Activity.sitemap(priority=0.7),
@@ -22,7 +23,9 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('martor/', include('martor.urls')),
+    path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
     ]
 
 urlpatterns += i18n_patterns(
@@ -37,7 +40,8 @@ urlpatterns += i18n_patterns(
     # path('admin/history/', include('djangoplicity.adminhistory.urls', namespace='adminhistory_site')),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage')
+    url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage'),
+
 )
 
 if settings.DEBUG:

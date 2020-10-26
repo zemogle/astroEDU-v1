@@ -428,63 +428,6 @@ class RepositoryEntry(models.Model):
         verbose_name_plural = 'repository entries'
 
 
-class JourneyCategoryQuerySet(TranslatableQuerySet):
-    pass
-
-
-class JourneyCategoryManager(PublishingManager, TranslatableManager):
-    queryset_class = JourneyCategoryQuerySet
-
-
-class JourneyCategory(TranslatableModel, PublishingModel):
-    objects = JourneyCategoryManager()
-
-    class Meta:
-        verbose_name = "journey category"
-        verbose_name_plural = "journey category"
-
-
-class JourneyCategoryTranslation(TranslatedFieldsModel):
-
-    master = models.ForeignKey(JourneyCategory, related_name='translations', null=True, on_delete=models.CASCADE)
-    title = models.CharField(blank=False, max_length=255, verbose_name='Title')
-    # description = models.TextField(blank=True, verbose_name='General introduction')
-    description = RichTextField(blank=True, null=True, verbose_name='General introduction', config_name='default')
-
-
-class JourneyChapterQuerySet(TranslatableQuerySet):
-    pass
-
-
-class JourneyChapterManager(TranslatableManager):
-    queryset_class = JourneyChapterQuerySet
-
-
-class JourneyChapter(TranslatableModel):
-    """
-    There was an idea to make 'The journey of ideas' section in different way than other Activities.
-    That's why there is another model/view.
-    """
-    activities = models.ManyToManyField(Activity, related_name='+', blank=True)
-    journey = models.ForeignKey(JourneyCategory, on_delete=models.CASCADE)
-    objects = JourneyChapterManager()
-    position = models.IntegerField()
-
-    def __str__(self):
-        return self.title
-
-
-class JourneyChapterTranslation(TranslatedFieldsModel):
-    master = models.ForeignKey(JourneyChapter, related_name='translations', null=True, on_delete=models.CASCADE)
-    title = models.CharField(blank=False, max_length=255, verbose_name='Chapter title')
-    description = models.TextField(blank=True, verbose_name='Chapter introduction')
-
-    class Meta:
-        unique_together = (
-            ('language_code', 'master'),
-        )
-
-
 class LinkQuerySet(TranslatableQuerySet):
     pass
 

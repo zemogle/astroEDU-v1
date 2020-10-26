@@ -1,4 +1,4 @@
-{% load static %}
+{% load static martortags %}
 {% load i18n %}
 
 	{% if content %}
@@ -8,7 +8,7 @@
 			<div class="title_text">{{text}}</div>
 			<div style="clear: both"></div>
 		</div>
-		<div class="text">{{ content }}</div>
+		<div class="text">{{ content|safe_markdown }}</div>
 	</div>
 	<div class="clear"></div>
 	{% endif %}

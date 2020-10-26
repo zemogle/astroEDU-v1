@@ -53,8 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.sites',
     'parler',
-    'ckeditor',
+    # 'ckeditor',
     'easy_thumbnails',
+    'martor',
 
     'django_mistune',
 
@@ -177,7 +178,7 @@ LANGUAGES = (
 # LANGUAGES = sorted(LANGUAGES, key=operator.itemgetter(0))
 
 PARLER_LANGUAGES = {
-    None: (
+    1: (
         {'code': 'en'},
         {'code': 'it'},
         {'code': 'kr'},
@@ -244,4 +245,60 @@ MISTUNE_STYLES = {
     # 'parse_html': True,  # parse text in block level html.
     # 'skip_style': True,
     # 'skip_html': True,
+}
+
+MARTOR_THEME = 'bootstrap'
+
+# Global martor settings
+# Input: string boolean, `true/false`
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'false',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
+    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
+    'living': 'false',      # to enable/disable live updates in preview
+    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
+    'hljs': 'true',         # to enable/disable hljs highlighting in preview
+}
+
+MARTOR_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.smarty',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.tables',
+
+    # Custom markdown extensions.
+    'martor.extensions.urlize',
+    'martor.extensions.del_ins',      # ~~strikethrough~~ and ++underscores++
+    'martor.extensions.mention',      # to parse markdown mention
+    'martor.extensions.mdx_video',    # to parse embed/iframe video
+]
+
+# To show the toolbar buttons
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold', 'italic', 'horizontal', 'heading', 'pre-code',
+    'blockquote', 'unordered-list', 'ordered-list',
+    'link', 'image-link', 'image-upload',
+    'direct-mention', 'toggle-maximize', 'help'
+]
+
+# To setup the martor editor with title label or not (default is False)
+MARTOR_ENABLE_LABEL = True
+MAX_IMAGE_UPLOAD_SIZE = 20971520
+MARTOR_UPLOAD_URL = '/api/uploader/'
+MARTOR_UPLOAD_PATH = 'activities/attach/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'django': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
 }

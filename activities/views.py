@@ -1,19 +1,69 @@
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.http import Http404
+import os
+import json
+import uuid
+from django_ext import compiler
 from django.conf import settings
-
-from django.views.generic import ListView, DetailView
-from parler.views import ViewUrlMixin, TranslatableSlugMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.translation import get_language
-from django_ext import compiler
-from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import ListView, DetailView
+from martor.utils import LazyEncoder
+from parler.views import ViewUrlMixin, TranslatableSlugMixin
 
 
-from .models import Activity, Collection, ACTIVITY_SECTIONS, ACTIVITY_METADATA, JourneyCategory, JourneyChapter
+from .models import Activity, Collection, ACTIVITY_SECTIONS, ACTIVITY_METADATA
 
+
+
+@login_required
+def markdown_uploader(request):
+    """
+    Makdown image upload for locale storage
+    and represent as json to markdown editor.
+    """
+    if request.method == 'POST' and request.is_ajax():
+        if 'markdown-image-upload' in request.FILES:
+            image = request.FILES['markdown-image-upload']
+            image_types = [
+                'image/png', 'image/jpg',
+                'image/jpeg', 'image/pjpeg', 'image/gif'
+            ]
+            if image.content_type not in image_types:
+                data = json.dumps({
+                    'status': 405,
+                    'error': _('Bad image format.')
+                }, cls=LazyEncoder)
+                return HttpResponse(
+                    data, content_type='application/json', status=405)
+
+            if image.size > settings.MAX_IMAGE_UPLOAD_SIZE:
+                to_MB = settings.MAX_IMAGE_UPLOAD_SIZE / (1024 * 1024)
+                data = json.dumps({
+                    'status': 405,
+                    'error': _('Maximum image file is %(size) MB.') % {'size': to_MB}
+                }, cls=LazyEncoder)
+                return HttpResponse(
+                    data, content_type='application/json', status=405)
+
+            img_uuid = "{0}-{1}".format(uuid.uuid4().hex[:10], image.name.replace(' ', '-'))
+            tmp_file = os.path.join(settings.MARTOR_UPLOAD_PATH, img_uuid)
+            def_path = default_storage.save(tmp_file, ContentFile(image.read()))
+            img_url = os.path.join(settings.MEDIA_URL, def_path)
+
+            data = json.dumps({
+                'status': 200,
+                'link': img_url,
+                'name': image.name
+            })
+            return HttpResponse(data, content_type='application/json')
+        return HttpResponse(_('Invalid request!'))
+    return HttpResponse(_('Invalid request!'))
 
 def home(request):
 
@@ -102,12 +152,6 @@ class ActivityDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['sections'] = ACTIVITY_SECTIONS
         context['sections_meta'] = ACTIVITY_METADATA
-        try:
-            import spaceawe
-            context['random'] = spaceawe.misc.spaceawe_random_resources(self.object)
-        except:
-            # context['random'] = self.get_queryset(only_translations=True).order_by('?')[:3]
-            pass
         return context
 
     def get(self, request, *args, **kwargs):
@@ -179,23 +223,3 @@ class CollectionDetailView(TranslatableSlugMixin, DetailView):
     # template_name = 'activities/collection_detail.html'
     # slug_field = 'slug'
     slug_url_kwarg = 'collection_slug'
-
-
-class JourneyListView(ViewUrlMixin, ListView):
-    model = JourneyCategory
-    view_url_name = 'activities:journey'
-    #page_template_name = 'activities/journey.html'
-    #all_categories = 'all'
-
-    def get_context_data(self, **kwargs):
-        last_journey = JourneyCategory.objects.available(user=self.request.user).last()
-        context = super().get_context_data(**kwargs)
-        context['sections_meta'] = ACTIVITY_METADATA
-        #context['page_template'] = self.page_template_name
-        context['all_categories'] = 'all'
-        context['category'] = self.kwargs.get('category', 'all')
-        context['activities'] = _activity_queryset(self.request)
-        context['journey'] = last_journey
-        if last_journey:
-            context['chapters'] = JourneyChapter.objects.filter(journey_id=last_journey.id)
-        return context

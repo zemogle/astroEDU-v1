@@ -16,6 +16,7 @@ from activities.models import Activity, Collection
 from search.views import simplesearch
 from activities.views import home, about, CollectionListView, CollectionDetailView, markdown_uploader
 
+admin.site.enable_nav_sidebar = False
 
 sitemaps = {
     'activities': Activity.sitemap(priority=0.7),

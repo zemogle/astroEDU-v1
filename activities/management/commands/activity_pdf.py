@@ -1,26 +1,57 @@
+import sys
+import tempfile
+import base64
+
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from activities.compile import make_pdf
+from activities.models import Activity
+from django.core.files.base import ContentFile
 
 
 class Command(BaseCommand):
-    help = 'Generates PDF for the specified activities'
+    help = 'Generates PDF for the specified articles'
 
     def add_arguments(self, parser):
         # Positional arguments
-        parser.add_argument('code', help='Four digit code (YYnn) of the article')
-        parser.add_argument('lang', help='Language of the article')
-
-        # Named (optional) arguments
+        parser.add_argument('--code', help='Four digit code (YYnn) of the article, will replace existing PDFs unless used with --new')
+        parser.add_argument('--lang', help='Language of the article')
         parser.add_argument(
-            '--site-url',
-            action='store',
-            dest='site_url',
-            default=None,
-            help='Connect to a website other than %s' % settings.SITE_URL)
+            '--new',
+            action='store_true',
+            help='Generate PDFs for new activities',
+        )
+
 
     def handle(self, *args, **options):
-        code = options['code']
-        lang = options['lang']
-        make_pdf(code, lang, site_url=options['site_url'])
+        if options['new'] and not options['code']:
+            versions = ActivityTranslation.objects.filter(pdf__isnull=True).order_by('-creation_date')
+        elif options['code']:
+            try:
+                a = Activity.objects.get(code=options['code'])
+                versions = a.translations.all()
+            except Exception as e:
+                self.stderr.write(e)
+                self.stderr.write(f"Activity {options['code']} not found")
+                sys.exit()
+        else:
+            self.stderr.write("Either select --new or enter --code or both")
+            sys.exit()
+        if options.get('lang',None):
+            try:
+                version = versions.get(language_code=options['lang'])
+            except Exception as e:
+                self.stderr.write(e)
+                self.stderr.write(f"Activity {options['code']} in {options['lang']} not found")
+                sys.exit()
+            versions = [version]
+        self.stdout.write(f'Generating PDFs for {len(versions)} activities')
+        for version in versions:
+            if options['new'] and version.pdf:
+                self.stdout.write(f"Skipping {version.master.code} in {version.language_code}")
+                continue
+            file_obj = version.generate_pdf()
+            filename = f'astroedu-{version.master.code}-{version.language_code}.pdf'
+            version.pdf.save(filename, ContentFile(file_obj))
+            version.save()
+            self.stdout.write(f'Written {filename}')

@@ -1,0 +1,141 @@
+<!DOCTYPE html>{% load i18n static smartpages easy_thumbnails_tags i18n martortags getattribute relativise_img_src %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="astroEDU is an open-access peer-review platform for educators to discover, review, distribute, improve, and remix the best astronomy education activities around the world.">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.xml" title="astroEDU">
+<title>{% block site_title %}astroEDU{% endblock %}</title>
+
+<link href="{% static 'css/print.css' %}" rel="stylesheet" />
+<link href="{% static 'css/fonts.css' %}" rel="stylesheet" />
+
+
+<link href='https://fonts.googleapis.com/css?family=Bowlby+One+SC&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Comfortaa:300&subset=latin,greek,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Dosis:300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+  <div class="article-title">
+    <div class="sslogo">
+      <img class="large" src="{% static 'designimages/astroedu_logo.png' %}"/>
+    </div>
+    </div>
+    <div class="article-title-text">
+        <h1>{{ object.title }}</h1>
+      <div class="categories right">
+        {% for category in object.master.categories.all %}
+            <img style="width:40px" src="{% static 'img/categories/' %}{{ category.code }}.svg" title="{{ category.title }}"/>
+        {% endfor %}
+      </div>
+    </div>
+
+  <div class="row">
+{% if object.master.main_visual %}
+    <img src="{{ object.master.main_visual.url}}" class="main_visual"/>
+{% endif %}
+
+	<h2>{{ object.teaser }}</h2>
+	<div class="authors">{{ object.master.author_list }}</div>
+  </div>
+
+    {% if object.code == '1302' %} <!-- Scientix Award --> <div><a href="https://medium.com/@iauastroedu/iau-astroedu-honoured-with-science-education-award-95437e356d50" class="award_badge" target="_blank"><img src="{% static 'designimages/award_badge.png' %}" alt="Scientix Award" /></a></div>{% endif %}
+
+	{% for section in sections %}
+  <div class="section {{section.0}}">
+		<div class="section-title">
+			<div class="icon"><img src="{% static 'designimages/sections-orange/'|add:section.0|add:'.svg' %}" alt="" /></div>
+			<div class="title_text"><h3>{{section.1}}</h3></div>
+		</div>
+		<div class="text">{{ object.master|getattribute:section.0|safe_markdown|relativise_img_src:object.master }}</div>
+	</div>
+	<div class="clear"></div>
+{% endfor %}
+
+<div class="layout_rightcolumn">
+
+	<div class="meta">
+
+    <div class="section_meta"><div class="section_meta_inner">
+			<div class="icon"><img src="{% static 'designimages/sections-grey/keywords.svg' %}" alt="" /></div>
+			<div class="text">
+				<div class="title_text">{% trans 'Keywords' %}</div>
+				<div class="content">{{ object.master.keywords }}</div>
+			</div>
+			<div style="clear: both"></div>
+		</div></div>
+
+		{% for section in object.master.metadata_aslist %}
+    <div class="section_meta"><div class="section_meta_inner">
+      <div class="icon"><img src="{% static 'designimages/sections-grey/'|add:section.0|add:'.svg' %}" alt="" /></div>
+      <div class="text">
+        <div class="title_text">{% trans section.1 %}</div>
+        <div class="content">{{ section.2 }}</div>
+      </div>
+      <div style="clear: both"></div>
+    </div></div>
+		{% endfor %}
+
+		{% if object.master.attachment_list or object.master.languageattachment_list %}
+		<div class="section_meta grey">
+			<div class="title_text">{% trans "Attachments" %}</div>
+            {% if object.master.attachment_list %}
+                {% for attachment in object.master.attachment_list %}
+                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                {% endfor %}
+            {% endif %}
+            {% if object.master.languageattachment_list %}
+                {% for attachment in object.master.languageattachment_list %}
+                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                {% endfor %}
+            {% endif %}
+
+            {% if object.master.attachment_list|length > 1 or object.master.languageattachment_list|length > 1 %}
+                <div class="title_text">{% trans "All Attachments" %}</div>
+                <div class="content"><img src="{% static 'designimages/attachment_all_icon.png' %}" alt="" /><a href="{% url 'activities:detail' code=object.master.code slug=object.slug %}?format=zip">All attachments</a></div>
+            {% endif %}
+
+		</div>
+		{% endif %}
+
+
+		{% if object.repositoryentry_set.all %}
+		<div class="section_meta orange">
+			<div class="title_text">{% trans "Repositories" %}</div>
+			<div class="icon">
+			{% for repositoryentry in object.repositoryentry_set.all %}
+				<a href="{{repositoryentry.url}}" target="_blank" title="{{repositoryentry.repo.name}}"><img src="{% static 'designimages/repositories/'|add:repositoryentry.repo.name|add:'.png' %}" alt="{{repositoryentry.repo.name}}" /></a>
+			{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="section_meta grey">
+			<div class="title_text">{% trans "Citation" %}</div>
+			<div class="icon">
+				{{object.citable_author_list}}, {{object.release_date|date:"Y"}}, <i>{{object.title}}</i>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.doi %}, <a href="http://dx.doi.org/{{object.doi}}"> doi:{{object.doi}}</a>{% endif %}
+			</div>
+		</div>
+
+		{% if object.acknowledgement %}
+		<div class="section_meta orange">
+			<div class="title_text">{% trans "Acknowledgement" %}</div>
+			<div class="icon">
+				{{object.acknowledgement}}
+			</div>
+		</div>
+		{% endif %}
+
+	</div>
+
+</div>
+
+</body>
+</html>

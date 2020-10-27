@@ -1,0 +1,124 @@
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0; }
+
+  body {
+    background-color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+    color: #555; }
+body, p, td, th, ul, ol, input, textarea { font-family: 'Gotham', sans-serif; color: #666666; font-size: 14px; font-weight: 500; }
+
+
+    h1 {
+      font-family: "GothamBold", cursive; }
+
+    h2 {
+      font-family: "GothamBold", sans-serif;
+      text-align: center;
+      margin-bottom: 1.5em; }
+
+
+:lang(ta) { }
+  :lang(ta) .slide-categories .title, :lang(ta) #more-info p, :lang(ta) .category-list .title {
+    font-family: 'Lohit Tamil', sans-serif; }
+  :lang(ta) .slide-categories .title, :lang(ta) #more-info p {
+    font-size: 14px; }
+  :lang(ta) .category-list .title {
+    font-size: 16px; }
+
+html[dir=rtl] .slick-prev {
+  left: auto;
+  right: 0px; }
+
+html[dir=rtl] .slick-next {
+  left: 0px;
+  right: auto; }
+
+html[dir=rtl] .home-feature .title, html[dir=rtl] .home-feature .date {
+  left: auto;
+  right: 25px; }
+
+html[dir=rtl] .home-feature .categories {
+  left: 35px;
+  right: auto; }
+
+html[dir=rtl] .article-title .left {
+  float: right; }
+
+html[dir=rtl] .article-title .right {
+  float: left; }
+
+  .article-title {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    display:table;
+  }
+
+  .article-title-text,
+  .sslogo {
+    display:table-cell;
+  }
+
+  .sslogo img {
+    width:200px;
+  }
+
+    .article-title .title {
+      font-size: 40px;
+      font-weight: bold; }
+    .article-title .date {
+      font-size: 16px; }
+    .article-title .categories img {
+      height: 70px;
+      width: 70px;
+      padding-left: 10px;
+      display: inline-block; }
+
+
+.section-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display:table;
+}
+
+.section-title .icon, .section-title .title_text {
+  display:table-cell;
+}
+.section-title .icon img,
+.section_meta .icon img {
+  width:50px
+}
+
+.section .title_text { font-size: 13px; font-weight: 900; text-transform: uppercase; padding-top: 15px; padding-bottom: 15px; }
+.section .content { font-size: 11px; font-weight: bold; margin-bottom: 5px; }
+.section .content img { margin-left: 10px; margin-right: 10px; margin-top: 2px; vertical-align: middle; }
+
+.section_meta.grey { border-right-color: #6C6C70; background-color: #E8E8E8; }
+.section_meta.orange { border-right-color: #F8B132; background-color: #F7EFE2; }
+.section_meta.orange .title_text { color: #F8B132; }
+
+  .left {
+    float: left; }
+
+  .right {
+    float: right; }
+
+#sponsors img {
+  max-width:50px;
+}
+
+img.main_visual {
+  max-width:600px;
+}
+
+.warning {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: beige;
+}

@@ -1,14 +1,20 @@
 import uuid
 import os
-from urllib.parse import urlparse
+import io
+
+from autoslug import AutoSlugField
 from ckeditor.fields import RichTextField
 from django.conf import settings
+from django.contrib.staticfiles import finders
+from django.core.files.storage import default_storage
 from django.db import models
+from django.template.loader import render_to_string
 from django.urls import reverse
-from parler.models import TranslatableModel, TranslatedFieldsModel
 from parler.managers import TranslatableManager, TranslatableQuerySet
-from autoslug import AutoSlugField
+from parler.models import TranslatableModel, TranslatedFieldsModel
 from sorl.thumbnail import ImageField
+from urllib.parse import urlparse
+from weasyprint import HTML, CSS
 
 from django_ext.models import PublishingModel, PublishingManager
 from django_ext.models.spaceawe import SpaceaweModel
@@ -228,7 +234,8 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         if filename.startswith('http') or filename.startswith('/'):
             result = filename
         else:
-            result = os.path.join(settings.MEDIA_URL, 'activities/attach', self.uuid, filename)
+            path = os.path.join('activities/attach', str(self.uuid), filename)
+            result = default_storage.url(path)
         return result
 
     def __str__(self):
@@ -282,6 +289,29 @@ class ActivityTranslation(TranslatedFieldsModel):
     # Space Awareness fields
     big_idea = models.CharField(max_length=200, blank=True, verbose_name='Big Idea of Science')
     spaceawe_authorship = models.TextField(blank=True, verbose_name='Space Awareness authorship')
+    pdf = models.FileField(upload_to='pdf/', blank=True, null=True)
+
+
+    def generate_pdf(self, no_trans=False, path=''):
+        context = {
+            'object': self,
+            'pdf': True,
+            'no_trans' : no_trans,
+            'media_root' : settings.MEDIA_ROOT,
+            'sections': ACTIVITY_SECTIONS,
+            'sections_meta': ACTIVITY_METADATA
+        }
+        with open(finders.find('css/print.css')) as f:
+            css = CSS(string=f.read())
+        html_string = render_to_string('activities/activity_detail_print.html', context)
+        html = HTML(string=html_string, base_url="https://astroedu.iau.org")
+        # filepath = Path(path) / filename
+        fileobj = io.BytesIO()
+        html.write_pdf(fileobj, stylesheets=[css])
+        # return filepath
+        pdf = fileobj.getvalue()
+        fileobj.close()
+        return pdf
 
     class Meta:
         unique_together = (

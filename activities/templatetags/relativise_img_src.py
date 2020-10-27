@@ -25,11 +25,10 @@ def _relativise(value, activity, constraint=None):
             new_src = default_storage.url(path)
         except:
             new_src = "https://via.placeholder.com/200x200?text=No+Image"
-        logger.critical(new_src)
         result += value[new_start:m.start()] + '<img src="%s"/>' % new_src
         new_start = m.end()
     result += value[new_start:]
-    # result = mark_safe(result)
+    result = mark_safe(result)
     return result
 
 

@@ -159,6 +159,11 @@ img.main_visual {
   max-width:600px;
 }
 
+.maincontent img {
+  width: 100%;
+  height: auto;
+}
+
 .warning {
   padding: 10px;
   margin-top: 10px;

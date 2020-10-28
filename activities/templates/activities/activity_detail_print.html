@@ -121,7 +121,7 @@
 		<div class="section_meta grey">
 			<div class="title_text">{% trans "Citation" %}</div>
 			<div class="icon">
-				{{object.citable_author_list}}, {{object.release_date|date:"Y"}}, <i>{{object.title}}</i>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.doi %}, <a href="http://dx.doi.org/{{object.doi}}"> doi:{{object.doi}}</a>{% endif %}
+				{{object.master.citable_author_list}}, {{object.master.release_date|date:"Y"}}, <i>{{object.master.title}}</i>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.master.doi %}, <a href="http://dx.doi.org/{{object.master.doi}}"> doi:{{object.master.doi}}</a>{% endif %}
 			</div>
 		</div>
 

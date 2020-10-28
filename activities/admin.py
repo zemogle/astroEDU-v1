@@ -80,7 +80,7 @@ class LinkInline(TranslatableTabularInline):
 class ActivityAdminForm(TranslatableModelForm):
     class Meta:
         model = Activity
-        fields = ('code', 'title', 'release_date', 'published', 'featured', 'space', 'earth', 'navigation', 'heritage', 'sourcelink_name', 'sourcelink_url', )
+        fields = ('code', 'title', 'release_date', 'published', 'featured', 'space', 'earth', 'navigation', 'heritage', 'sourcelink_name', 'sourcelink_url')
         widgets = {
             'time': forms.RadioSelect,
             'group': forms.RadioSelect,
@@ -266,7 +266,7 @@ class ActivityAdmin(TranslatableAdmin):
         (None,
          {'fields': ('code', 'title',)}),
         ('Publishing',
-         {'fields': ('published', 'featured', ('release_date', 'embargo_date'),),}),
+         {'fields': ('published', 'featured', 'pdf', ('release_date', 'embargo_date'),),}),
         (None,
          {'fields': (
              ('age', 'level',), ('time', 'group', 'supervised', 'cost',), ('location', 'skills', 'learning',),

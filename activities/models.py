@@ -66,7 +66,7 @@ ACTIVITY_METADATA = (
     ('content_area_focus', 'Content Area focus',
      {'display': 'content_area_focus',
       'multiple': True}),
-    ('astronomical_scientific_category', 'Astronomical Scientific Categories',
+    ('astronomical_scientific_category', 'Astronomy Categories',
      {'display': 'content_area_focus',
       'multiple': True}),
     ('earth_science_keyword', 'Earth Science keywords',
@@ -231,7 +231,7 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         return result
 
     def attachment_url(self, filename):
-        if filename.startswith('http') or filename.startswith('/'):
+        if filename.startswith('http'):
             result = filename
         else:
             path = os.path.join('activities/attach', str(self.uuid), filename)
@@ -299,7 +299,7 @@ class ActivityTranslation(TranslatedFieldsModel):
             'no_trans' : no_trans,
             'media_root' : settings.MEDIA_ROOT,
             'sections': ACTIVITY_SECTIONS,
-            'sections_meta': ACTIVITY_METADATA
+            'long_meta' : ['skills','learning']
         }
         with open(finders.find('css/print.css')) as f:
             css = CSS(string=f.read())

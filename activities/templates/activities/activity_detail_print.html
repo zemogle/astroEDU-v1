@@ -30,11 +30,6 @@
     </div>
     <div class="article-title-text">
         <h1>{{ object.title }}</h1>
-      <div class="categories right">
-        {% for category in object.master.categories.all %}
-            <img style="width:40px" src="{% static 'img/categories/' %}{{ category.code }}.svg" title="{{ category.title }}"/>
-        {% endfor %}
-      </div>
     </div>
 
   <div class="row">
@@ -47,6 +42,42 @@
   </div>
 
     {% if object.code == '1302' %} <!-- Scientix Award --> <div><a href="https://medium.com/@iauastroedu/iau-astroedu-honoured-with-science-education-award-95437e356d50" class="award_badge" target="_blank"><img src="{% static 'designimages/award_badge.png' %}" alt="Scientix Award" /></a></div>{% endif %}
+
+<div class="row">
+  <div class="section_meta">
+  {% for section in object.master.metadata_aslist %}
+  {% if section.0 not in long_meta %}
+    <div class="section_meta_inner">
+      <div class="meta">
+        <div class="icon"><img src="{% static 'designimages/sections-grey/'|add:section.0|add:'.svg' %}" alt="" /></div>
+        <div class="title_text">{% trans section.1|upper %}</div>
+      </div>
+      <div class="content">{{ section.2 }}</div>
+    </div>
+    {% endif %}
+  {% endfor %}
+  {% for section in object.master.metadata_aslist %}
+  {% if section.0 in long_meta %}
+    <div class="section_long_meta_inner">
+      <div class="meta">
+        <div class="icon"><img src="{% static 'designimages/sections-grey/'|add:section.0|add:'.svg' %}" alt="" /></div>
+        <div class="title_text">{% trans section.1|upper %}</div>
+      </div>
+      <div class="content">{{ section.2 }}</div>
+    </div>
+    {% endif %}
+  {% endfor %}
+  </div>
+  <div class="section_meta"><div class="section_long_meta_inner">
+    <div class="meta">
+      <div class="icon"><img src="{% static 'designimages/sections-grey/keywords.svg' %}" alt="" /></div>
+      <div class="title_text">{% trans 'Keywords' %}</div>
+    </div>
+    <div class="content">{{ object.master.keywords }}</div>
+  </div>
+</div>
+</div>
+
 
 	{% for section in sections %}
   <div class="section {{section.0}}">
@@ -61,27 +92,6 @@
 
 <div class="layout_rightcolumn">
 
-	<div class="meta">
-
-    <div class="section_meta"><div class="section_meta_inner">
-			<div class="icon"><img src="{% static 'designimages/sections-grey/keywords.svg' %}" alt="" /></div>
-			<div class="text">
-				<div class="title_text">{% trans 'Keywords' %}</div>
-				<div class="content">{{ object.master.keywords }}</div>
-			</div>
-			<div style="clear: both"></div>
-		</div></div>
-
-		{% for section in object.master.metadata_aslist %}
-    <div class="section_meta"><div class="section_meta_inner">
-      <div class="icon"><img src="{% static 'designimages/sections-grey/'|add:section.0|add:'.svg' %}" alt="" /></div>
-      <div class="text">
-        <div class="title_text">{% trans section.1 %}</div>
-        <div class="content">{{ section.2 }}</div>
-      </div>
-      <div style="clear: both"></div>
-    </div></div>
-		{% endfor %}
 
 		{% if object.master.attachment_list or object.master.languageattachment_list %}
 		<div class="section_meta grey">
@@ -106,16 +116,6 @@
 		{% endif %}
 
 
-		{% if object.repositoryentry_set.all %}
-		<div class="section_meta orange">
-			<div class="title_text">{% trans "Repositories" %}</div>
-			<div class="icon">
-			{% for repositoryentry in object.repositoryentry_set.all %}
-				<a href="{{repositoryentry.url}}" target="_blank" title="{{repositoryentry.repo.name}}"><img src="{% static 'designimages/repositories/'|add:repositoryentry.repo.name|add:'.png' %}" alt="{{repositoryentry.repo.name}}" /></a>
-			{% endfor %}
-			</div>
-		</div>
-		{% endif %}
 
 		<div class="section_meta grey">
 			<div class="title_text">{% trans "Citation" %}</div>
@@ -135,7 +135,6 @@
 
 	</div>
 
-</div>
 
 </body>
 </html>

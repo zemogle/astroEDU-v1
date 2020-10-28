@@ -87,12 +87,54 @@ html[dir=rtl] .article-title .right {
   display:table;
 }
 
-.section-title .icon, .section-title .title_text {
+.section-title .icon,
+.section-title .title_text,
+.meta .icon,
+.meta .title_text {
   display:table-cell;
 }
 .section-title .icon img,
 .section_meta .icon img {
-  width:50px
+  width:25px
+}
+
+.meta {
+  display:table;
+}
+
+.meta .icon,
+.meta .title_text {
+  padding-left:5px;
+  padding-top: 0px;
+}
+
+.meta .title_text {
+  font-weight: bold;
+  color:#555;
+}
+
+.section_meta {
+  display: flex;
+  flex-flow: wrap;
+  font-size:0.75em;
+}
+
+.section_meta_inner {
+  background: #F7EFE2;
+  padding: 5px;
+  width: 180px;
+  height: 70px;
+  margin: 2px;
+  color: #F8B132;
+}
+
+.section_long_meta_inner {
+  width:100%;
+  background: #E8E8E8;
+  color:  #6C6C70;
+  padding: 5px;
+  margin: 2px;
+
 }
 
 .section .title_text { font-size: 13px; font-weight: 900; text-transform: uppercase; padding-top: 15px; padding-bottom: 15px; }

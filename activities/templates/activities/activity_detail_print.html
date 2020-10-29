@@ -26,9 +26,9 @@
 <div id="frontpage">
 
       <img src="{% static 'designimages/astroEDU_pdf_cover.png' %}"/>
-        <h1>{{ object.title }}</h1>
+        <h1 class="title_text">{{ object.title }}</h1>
 
-        <h2>{{ object.teaser }}</h2>
+        <h2 class="orange title_text">{{ object.teaser }}</h2>
       	<div class="authors">{{ object.master.author_list }}</div>
 </div>
 
@@ -118,7 +118,7 @@
 
 		<div class="section_meta grey">
 			<div class="title_text">{% trans "Citation" %}</div>
-			<div class="icon">
+			<div class="text">
 				{{object.master.citable_author_list}}, {{object.master.release_date|date:"Y"}}, <i>{{object.master.title}}</i>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.master.doi %}, <a href="http://dx.doi.org/{{object.master.doi}}"> doi:{{object.master.doi}}</a>{% endif %}
 			</div>
 		</div>
@@ -126,7 +126,7 @@
 		{% if object.acknowledgement %}
 		<div class="section_meta orange">
 			<div class="title_text">{% trans "Acknowledgement" %}</div>
-			<div class="icon">
+			<div class="text">
 				{{object.acknowledgement}}
 			</div>
 		</div>

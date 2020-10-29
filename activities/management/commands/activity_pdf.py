@@ -51,6 +51,7 @@ class Command(BaseCommand):
                 continue
             file_obj = version.generate_pdf()
             filename = f'astroedu-{version.master.code}-{version.language_code}.pdf'
+            version.pdf.delete(save=False)
             version.pdf.save(filename, ContentFile(file_obj))
             version.save()
             self.stdout.write(f'Written {filename}')

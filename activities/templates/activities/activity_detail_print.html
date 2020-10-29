@@ -23,23 +23,21 @@
 <body>
 
 
-  <div class="article-title">
-    <div class="sslogo">
-      <img class="large" src="{% static 'designimages/astroedu_logo.png' %}"/>
-    </div>
-    </div>
-    <div class="article-title-text">
+<div id="frontpage">
+
+      <img src="{% static 'designimages/astroEDU_pdf_cover.png' %}"/>
         <h1>{{ object.title }}</h1>
-    </div>
+
+        <h2>{{ object.teaser }}</h2>
+      	<div class="authors">{{ object.master.author_list }}</div>
+</div>
 
   <div class="row">
 {% if object.master.main_visual %}
     <img src="{{ object.master.main_visual.url}}" class="main_visual"/>
 {% endif %}
 
-	<h2>{{ object.teaser }}</h2>
-	<div class="authors">{{ object.master.author_list }}</div>
-  </div>
+
 
     {% if object.code == '1302' %} <!-- Scientix Award --> <div><a href="https://medium.com/@iauastroedu/iau-astroedu-honoured-with-science-education-award-95437e356d50" class="award_badge" target="_blank"><img src="{% static 'designimages/award_badge.png' %}" alt="Scientix Award" /></a></div>{% endif %}
 

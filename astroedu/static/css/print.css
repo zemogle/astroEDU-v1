@@ -1,3 +1,11 @@
+@page front {
+  size: 21cm 29.7cm;
+}
+#frontpage {
+  page:front;
+  page-break-after: always;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

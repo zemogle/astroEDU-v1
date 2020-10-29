@@ -5,7 +5,7 @@ import base64
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from activities.models import Activity
+from activities.models import Activity, ActivityTranslation
 from django.core.files.base import ContentFile
 
 
@@ -25,7 +25,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['new'] and not options['code']:
-            versions = ActivityTranslation.objects.filter(pdf__isnull=True).order_by('-creation_date')
+            versions = ActivityTranslation.objects.filter(pdf__isnull=True, master__published=True).order_by('-master__creation_date')
         elif options['code']:
             try:
                 a = Activity.objects.get(code=options['code'])
@@ -39,12 +39,11 @@ class Command(BaseCommand):
             sys.exit()
         if options.get('lang',None):
             try:
-                version = versions.get(language_code=options['lang'])
+                versions = versions.filter(language_code=options['lang'])
             except Exception as e:
                 self.stderr.write(e)
                 self.stderr.write(f"Activity {options['code']} in {options['lang']} not found")
                 sys.exit()
-            versions = [version]
         self.stdout.write(f'Generating PDFs for {len(versions)} activities')
         for version in versions:
             if options['new'] and version.pdf:

@@ -24,12 +24,13 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('martor/', include('martor.urls')),
     path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
     ]
 
 urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
+
     path('', home, name='home'),
     path('search/', simplesearch, name='search'),
     # path('^testing/', include('astroedu.testing.urls', namespace='testing')),

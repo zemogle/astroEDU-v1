@@ -1,266 +1,152 @@
-import os.path
-import re
-import urllib
-import copy
-
-from django.conf import settings
-# from activities import markdown_utils
-
-from reportlab.lib.units import cm
-from reportlab.platypus import BaseDocTemplate, Frame, Image, Paragraph, Table, NextPageTemplate, PageBreak, PageTemplate, FrameBreak, TableStyle, KeepTogether, Spacer 
-from reportlab.platypus.flowables import Flowable
-
-from django_mistune import markdown
-from django_mistune.utils import Flattener, TreeRenderer
-from contrib.pdf.pdfrenderer import PdfRendererBase, AweImage, normalizeRGB
-
-from activities import utils
-from . import colors
-from .stylesheet import initStyleSheet
-
-DESTFOLDER = os.path.join(settings.MEDIA_ROOT, 'activities/download')
-ASSETS_ROOT = os.path.join(settings.BASE_DIR, 'share', 'pdf-assets')
-DEBUG = False
-
-IMAGE_MAX_WIDTH = 13.2*cm
-# PPI = 150
-# IMAGE_SCALE = 72./PPI
-ACTIVITY_METADATA_COLS = 3
-
-# def test():
-#     from activities.models import Activity
-#     from activities import tasks
-#     a = Activity.objects.available().get(code='0000')
-#     tasks.make_pdf(a)
-# # import django; django.setup(); from activities.pdf.renderer import test; test()
+from weasyprint import HTML, CSS
 
 
-class PdfFlattener(Flattener):
+class PdfGenerator:
+    """
+    Generate a PDF out of a rendered template, with the possibility to integrate nicely
+    a header and a footer if provided.
 
-    # def empty_inline(self):
-    #     return ''
+    Notes:
+    ------
+    - When Weasyprint renders an html into a PDF, it goes though several intermediate steps.
+      Here, in this class, we deal mostly with a box representation: 1 `Document` have 1 `Page`
+      or more, each `Page` 1 `Box` or more. Each box can contain other box. Hence the recursive
+      method `get_element` for example.
+      For more, see:
+      https://weasyprint.readthedocs.io/en/stable/hacking.html#dive-into-the-source
+      https://weasyprint.readthedocs.io/en/stable/hacking.html#formatting-structure
+    - Warning: the logic of this class relies heavily on the internal Weasyprint API. This
+      snippet was written at the time of the release 47, it might break in the future.
+    - This generator draws its inspiration and, also a bit of its implementation, from this
+      discussion in the library github issues: https://github.com/Kozea/WeasyPrint/issues/92
+    """
+    OVERLAY_LAYOUT = '@page {size: A4 portrait; margin: 0;}'
 
-    def inline(self, text=None):
-        return '' if text is None else text
+    def __init__(self, main_html, header_html=None, footer_html=None,
+                 base_url=None, side_margin=2, extra_vertical_margin=30):
+        """
+        Parameters
+        ----------
+        main_html: str
+            An HTML file (most of the time a template rendered into a string) which represents
+            the core of the PDF to generate.
+        header_html: str
+            An optional header html.
+        footer_html: str
+            An optional footer html.
+        base_url: str
+            An absolute url to the page which serves as a reference to Weasyprint to fetch assets,
+            required to get our media.
+        side_margin: int, interpreted in cm, by default 2cm
+            The margin to apply on the core of the rendered PDF (i.e. main_html).
+        extra_vertical_margin: int, interpreted in pixel, by default 30 pixels
+            An extra margin to apply between the main content and header and the footer.
+            The goal is to avoid having the content of `main_html` touching the header or the
+            footer.
+        """
+        self.main_html = main_html
+        self.header_html = header_html
+        self.footer_html = footer_html
+        self.base_url = base_url
+        self.side_margin = side_margin
+        self.extra_vertical_margin = extra_vertical_margin
 
-    def double_emphasis(self, content):
-        return '<strong>%s</strong>' % content
+    def _compute_overlay_element(self, element: str):
+        """
+        Parameters
+        ----------
+        element: str
+            Either 'header' or 'footer'
 
-    def emphasis(self, content):
-        return '<em>%s</em>' % content
-
-    def strikethrough(self, content):
-        return '<del>%s</del>' % content
-
-    def link(self, link, content):
-        if link != content:
-            content += ' (%s)' % link
-        return '<a href="%s">%s</a>' % (link, content)
-
-
-def markdown_pdfcommand(text, inline=None, block=None):
-    tree = markdown(text, TreeRenderer(), inline, block)
-    result = PdfFlattener().parse(tree)
-    return result
-
-
-#### FLOWABLES ####
-
-class SectionHeader(Paragraph):
-    def __init__(self, renderer, text, style, icon):
-        Paragraph.__init__(self, text, style)
-        self.renderer = renderer
-        self.icon = icon
-
-    def draw(self):
-        canvas = self.canv
-        Paragraph.draw(self)
-        self.renderer.paint_image(self.icon, -3.5*cm, -0.7*cm, canvas, mask='auto', scale=0.8)
-
-
-class HorizontalRuler(Flowable):
-
-    def wrap(self, availWidth, availHeight):
-        self.availWidth = availWidth
-        return (availWidth, .5*cm)
-
-    def split(self, availWidth, availHeight):
-        return []
-
-    def draw(self):
-        canvas = self.canv
-
-        canvas.saveState()
-        canvas.setLineWidth(.02*cm)
-        canvas.setStrokeColorRGB(*normalizeRGB(colors.HEADER_COLOR))
-        canvas.line(0, 0, self.availWidth, 0)
-        canvas.restoreState()
-
-
-#### END FLOWABLES ####
-
-
-class Renderer(PdfRendererBase):
-    # lang = 'en'
-
-    def __init__(self):
-        PdfRendererBase.__init__(self, assets_root=ASSETS_ROOT)
-        # self.register_font('Title1', 'fonts/Gotham-Bold.ttf')
-        self.register_font('Normal', normal='fonts/Gotham-Book.ttf', bold='fonts/Gotham-Bold.ttf', italic='fonts/Gotham-BookItalic.ttf', boldItalic='fonts/Gotham-BoldItalic.ttf')
-
-    def footer(self, canvas, doc):
-        canvas.saveState()
-        p = Paragraph('<b>iau.org/<font color="#F78606">astroedu</font></b>', self.styles['footer-right'])
-        w, h = p.wrap(doc.width, doc.bottomMargin)
-        p.drawOn(canvas, doc.leftMargin, 1.4*cm)
-        canvas.restoreState()
-
-    def onPageStartOne(self, canvas, doc):
-        self.paint_image(os.path.join(ASSETS_ROOT, 'astroEDU_pdf_cover.png'), 'left', 'top', canvas, mask='auto', scale='fill_width')
-
-    def onPageEndOne(self, canvas, doc):
-        self.footer(canvas, doc)
-
-    def onPageStartNormal(self, canvas, doc):
-        pass
-
-    def onPageEndNormal(self, canvas, doc):
-        self.footer(canvas, doc)
-        canvas.saveState()
-        canvas.setLineWidth(.02*cm)
-        canvas.setStrokeColorRGB(*normalizeRGB(colors.HEADER_COLOR))
-        canvas.line(5.5*cm, 28.2*cm, 5.5*cm, 30*cm)
-        canvas.setStrokeColorRGB(*normalizeRGB(colors.FOOTER_LINE_COLOR))
-        canvas.line(5.5*cm, 2.2*cm, self.page_width, 2.2*cm)
-        canvas.restoreState()
-        self.paint_image(os.path.join(ASSETS_ROOT, 'astroedu_logo.png'), 5.5*cm, 1.1*cm, canvas, mask='auto', scale=0.6)
-
-    def render(self, obj, file):
-        from activities.models import ACTIVITY_SECTIONS
-
-        self.relativise_img_src = obj.attachment_url
-
-        initStyleSheet(self.styles)
-
-        doc = BaseDocTemplate(
-            file,
-            showBoundary=DEBUG,
-            pagesize=self.pagesize,
-            title=obj.title,
-            author='astroEDU',
-            subject='Astronomy Education Activities',
+        Returns
+        -------
+        element_body: BlockBox
+            A Weasyprint pre-rendered representation of an html element
+        element_height: float
+            The height of this element, which will be then translated in a html height
+        """
+        html = HTML(
+            string=getattr(self, f'{element}_html'),
+            base_url=self.base_url,
         )
+        element_doc = html.render(stylesheets=[CSS(string=self.OVERLAY_LAYOUT)])
+        element_page = element_doc.pages[0]
+        element_body = PdfGenerator.get_element(element_page._page_box.all_children(), 'body')
+        element_body = element_body.copy_with_children(element_body.all_children())
+        element_html = PdfGenerator.get_element(element_page._page_box.all_children(), element)
 
-        # self.process(obj)
+        if element == 'header':
+            element_height = element_html.height
+        if element == 'footer':
+            element_height = element_page.height - element_html.position_y
 
-        doc.addPageTemplates([
-            PageTemplate(
-                id='PageOne',
-                frames=[
-                    # Frame(2.5*cm, self.page_height - 6.5*cm, 11.5*cm, 5*cm, id='PageOneTitle'),
-                    Frame(2.5*cm, 2.0*cm, self.page_width - 2*2.5*cm, 12.0*cm),
-                ], onPage=self.onPageStartOne, onPageEnd=self.onPageEndOne),
-            PageTemplate(
-                id='PageNormal',
-                # frames = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height),
-                frames = Frame(5.5*cm, 3.5*cm, self.page_width - 8*cm, 23.7*cm),
-                onPage=self.onPageStartNormal, onPageEnd=self.onPageEndNormal),
-            ])
+        return element_body, element_height
 
-        styles = self.styles
-        elements = []
+    def _apply_overlay_on_main(self, main_doc, header_body=None, footer_body=None):
+        """
+        Insert the header and the footer in the main document.
 
-        ## COVER PAGE
-        elements.append(Paragraph(obj.title, styles['Title']))
-        elements.append(Paragraph(obj.teaser, styles['Subtitle']))
-        elements.append(Paragraph(obj.author_list(), styles['Author']))
+        Parameters
+        ----------
+        main_doc: Document
+            The top level representation for a PDF page in Weasyprint.
+        header_body: BlockBox
+            A representation for an html element in Weasyprint.
+        footer_body: BlockBox
+            A representation for an html element in Weasyprint.
+        """
+        for page in main_doc.pages:
+            page_body = PdfGenerator.get_element(page._page_box.all_children(), 'body')
 
-        elements.append(NextPageTemplate('PageNormal'))
-        elements.append(FrameBreak())
+            if header_body:
+                page_body.children += header_body.all_children()
+            if footer_body:
+                page_body.children += footer_body.all_children()
 
-        ## SECOND PAGE
-        meta_table_data = self._build_meta_table(obj)
-        meta_table_style = TableStyle([
-                # ('INNERGRID', (0,0), (-1,-1), 0.25, normalizeRGB(colors.TEXT_COLOR)),
-                # ('BOX', (0,0), (-1,-1), .5, normalizeRGB(colors.TEXT_COLOR)),
-                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
-            ])
-        # elements.append(Spacer(.5*cm, .5*cm))
-        elements.append(KeepTogether(Table(meta_table_data, style=meta_table_style)))
-        elements.append(HorizontalRuler())
-        elements.append(Spacer(.5*cm, .5*cm))
+    def render_pdf(self):
+        """
+        Returns
+        -------
+        pdf: a bytes sequence
+            The rendered PDF.
+        """
+        if self.header_html:
+            header_body, header_height = self._compute_overlay_element('header')
+        else:
+            header_body, header_height = None, 0
+        if self.footer_html:
+            footer_body, footer_height = self._compute_overlay_element('footer')
+        else:
+            footer_body, footer_height = None, 0
 
-        for section_code, section_title in ACTIVITY_SECTIONS:
-            data = markdown_pdfcommand(getattr(obj, section_code))
-            if data:
-                header = SectionHeader(self, section_title, styles['Heading1'], icon=os.path.join(ASSETS_ROOT, 'sections-orange/%s.png' % section_code))
-                body = self._append_richtext(data)
-                # elements.append(header)
-                # elements += body
-                elements.append(KeepTogether([header, body[0]]))
-                elements += body[1:]
+        margins = '{header_size}px {side_margin} {footer_size}px {side_margin}'.format(
+            header_size=header_height + self.extra_vertical_margin,
+            footer_size=footer_height + self.extra_vertical_margin,
+            side_margin=f'{self.side_margin}cm',
+        )
+        content_print_layout = '@page {size: A4 portrait; margin: %s;}' % margins
 
-        data = markdown_pdfcommand(obj.get_footer_disclaimer())
-        disclaimer = self._append_richtext(data, normal_style='Disclaimer')
-        disclaimer.insert(0, HorizontalRuler())
-        elements.append(Spacer(.5*cm, .5*cm))
-        # elements += disclaimer
-        elements.append(KeepTogether(disclaimer))
+        html = HTML(
+            string=self.main_html,
+            base_url=self.base_url,
+        )
+        main_doc = html.render(stylesheets=[CSS(string=content_print_layout)])
 
-        doc.build(elements)
+        if self.header_html or self.footer_html:
+            self._apply_overlay_on_main(main_doc, header_body, footer_body)
+        pdf = main_doc.write_pdf()
 
-    def _append_richtext(self, data, normal_style='Normal'):
-        result = []
-        for name, content in data:
-            if name == 'paragraph':
-                result.append(Paragraph(content, self.styles[normal_style]))
-            elif name.startswith('header'):
-                header_level = name[len('header_'):]
-                result.append(Paragraph(content, self.styles['Heading'+header_level]))
-            elif name.startswith('list_item'):
-                list_level = name[len('list_item_'):]
-                result.append(Paragraph(content, self.styles['List'+list_level], bulletText=u'\u2022'))
-            elif name == 'image':
-                image_full_path, image_local_path = utils.local_resource(urllib.parse.unquote(self.relativise_img_src(content)))
-                result.append(AweImage(self, image_full_path, maxwidth=IMAGE_MAX_WIDTH))
-            elif name == 'table':
-                for i, row in enumerate(content):
-                    for j, cell in enumerate(row):
-                        fmt = cell[1]
-                        if fmt['header']:
-                            style = self.styles['TableHeader']
-                        elif fmt['align']:
-                            style = self.styles['TableCell-' + fmt['align']]
-                        else:
-                            style = self.styles['TableCell']
-                        value = cell[0] if cell[0] else u'\u00A0'  # a non-breaking space makes sure an empty row has enough height
-                        content[i][j] = Paragraph(value, style)
-                table_style = TableStyle([
-                        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                        ('INNERGRID', (0, 0), (-1, -1), 0.25, normalizeRGB(colors.TEXT_COLOR)),
-                        ('BOX', (0, 0), (-1, -1), .5, normalizeRGB(colors.TEXT_COLOR)),
-                        ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
-                    ])
-                result.append(KeepTogether(Table(content, style=table_style)))
-                result.append(Spacer(.5*cm, .5*cm))
-            else:
-                raise Exception('Unexpected command: ', name)
-        return result
+        return pdf
 
-    def _build_meta_table(self, obj):
-        result = []
-        for i, (code, title, value) in enumerate(obj.metadata_aslist()):
-            if i % ACTIVITY_METADATA_COLS == 0:
-                row = []
-                result.append(row)
-            row.append([
-                Paragraph('<b>%s</b>' % title, self.styles['MetaTableCell']),
-                Paragraph(value, self.styles['MetaTableCell']),
-            ])
+    @staticmethod
+    def get_element(boxes, element):
+        """
+        Given a set of boxes representing the elements of a PDF page in a DOM-like way, find the
+        box which is named `element`.
 
-        return result
-
-
-if __name__ == '__main__':
-    test()
+        Look at the notes of the class for more details on Weasyprint insides.
+        """
+        for box in boxes:
+            if box.element_tag == element:
+                return box
+            return PdfGenerator.get_element(box.all_children(), element)

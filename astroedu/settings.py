@@ -289,6 +289,8 @@ MAX_IMAGE_UPLOAD_SIZE = 20971520
 MARTOR_UPLOAD_URL = '/api/uploader/'
 MARTOR_UPLOAD_PATH = 'activities/attach/'
 
+TEMPLATE_STRING_IF_INVALID = 'temp'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

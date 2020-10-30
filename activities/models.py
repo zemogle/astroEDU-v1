@@ -10,6 +10,7 @@ from django.core.files.storage import default_storage
 from django.db import models
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.translation import activate
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFieldsModel
 from sorl.thumbnail import ImageField
@@ -239,7 +240,7 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         return result
 
     def __str__(self):
-        return '%s - %s' % (self.code, self.title)
+        return '%s - %s' % (self.code, self.language)
 
     def get_absolute_url(self):
         return reverse('activities:detail', kwargs={'code': self.code, 'slug': self.slug, })
@@ -293,6 +294,7 @@ class ActivityTranslation(TranslatedFieldsModel):
 
 
     def generate_pdf(self, no_trans=False, path=''):
+        activate(self.master.language)
         context = {
             'object': self,
             'pdf': True,

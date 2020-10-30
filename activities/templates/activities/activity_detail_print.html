@@ -1,4 +1,4 @@
-<!DOCTYPE html>{% load i18n static smartpages easy_thumbnails_tags i18n martortags getattribute relativise_img_src %}
+<!DOCTYPE html>{% load i18n static smartpages easy_thumbnails_tags martortags getattribute relativise_img_src %}
 
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr' }}">
@@ -24,7 +24,6 @@
 
 
 <div id="frontpage">
-
       <img src="{% static 'designimages/astroEDU_pdf_cover.png' %}"/>
         <h1 class="title_text">{{ object.title }}</h1>
 
@@ -37,9 +36,6 @@
     <img src="{{ object.master.main_visual.url}}" class="main_visual"/>
 {% endif %}
 
-
-
-    {% if object.code == '1302' %} <!-- Scientix Award --> <div><a href="https://medium.com/@iauastroedu/iau-astroedu-honoured-with-science-education-award-95437e356d50" class="award_badge" target="_blank"><img src="{% static 'designimages/award_badge.png' %}" alt="Scientix Award" /></a></div>{% endif %}
 
 <div class="row">
   <div class="section_meta">
@@ -81,9 +77,9 @@
   <div class="section {{section.0}}">
 		<div class="section-title">
 			<div class="icon"><img src="{% static 'designimages/sections-orange/'|add:section.0|add:'.svg' %}" alt="" /></div>
-			<div class="title_text"><h3>{{section.1}}</h3></div>
+			<div class="title_text"><h3>{% trans section.1|upper %}</h3></div>
 		</div>
-		<div class="text">{{ object.master|getattribute:section.0|safe_markdown|relativise_img_src:object.master }}</div>
+		<div class="text">{{ object|getattribute:section.0|safe_markdown|relativise_img_src:object.master }}</div>
 	</div>
 	<div class="clear"></div>
 {% endfor %}
@@ -93,38 +89,43 @@
 
 
 		{% if object.master.attachment_list or object.master.languageattachment_list %}
-		<div class="section_meta grey">
+		<div class="section grey">
 			<div class="title_text">{% trans "Attachments" %}</div>
             {% if object.master.attachment_list %}
+            <ul>
                 {% for attachment in object.master.attachment_list %}
-                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                    <li><a href="{{ attachment.file.url }}" target="_blank">{{ attachment.display_name }}</a></li>
                 {% endfor %}
+            </ul>
             {% endif %}
             {% if object.master.languageattachment_list %}
+              <ul>
                 {% for attachment in object.master.languageattachment_list %}
-                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                    <li><a href="{{ attachment.file.url }}" target="_blank">{{ attachment.display_name }}</a></li>
                 {% endfor %}
+                </ul>
             {% endif %}
 
-            {% if object.master.attachment_list|length > 1 or object.master.languageattachment_list|length > 1 %}
-                <div class="title_text">{% trans "All Attachments" %}</div>
-                <div class="content"><img src="{% static 'designimages/attachment_all_icon.png' %}" alt="" /><a href="{% url 'activities:detail' code=object.master.code slug=object.slug %}?format=zip">All attachments</a></div>
-            {% endif %}
+    {% if object.master.attachment_list|length > 1 or object.master.languageattachment_list|length > 1 %}
+        <div class="title_text">{% trans "All Attachments" %}</div>
+        <a href="{% url 'activities:detail' code=object.master.code slug=object.slug %}?format=zip">All attachments</a>
+    {% endif %}
 
 		</div>
 		{% endif %}
 
 
-
-		<div class="section_meta grey">
+<div class="row">
+		<div class="section grey">
 			<div class="title_text">{% trans "Citation" %}</div>
 			<div class="text">
-				{{object.master.citable_author_list}}, {{object.master.release_date|date:"Y"}}, <i>{{object.master.title}}</i>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.master.doi %}, <a href="http://dx.doi.org/{{object.master.doi}}"> doi:{{object.master.doi}}</a>{% endif %}
+				{{object.master.citable_author_list}}, {{object.master.release_date|date:"Y"}}, <em>{{object.title}}</em>, <a href="{{object.get_absolute_url}}">astroEDU, {{object.code}}</a>{% if object.master.doi %}, <a href="http://dx.doi.org/{{object.master.doi}}"> doi:{{object.master.doi}}</a>{% endif %}
 			</div>
 		</div>
-
+</div>
+<div class="row">
 		{% if object.acknowledgement %}
-		<div class="section_meta orange">
+		<div class="section orange">
 			<div class="title_text">{% trans "Acknowledgement" %}</div>
 			<div class="text">
 				{{object.acknowledgement}}
@@ -133,6 +134,7 @@
 		{% endif %}
 
 	</div>
+</div>
 
 
 </body>

@@ -2,11 +2,12 @@ import sys
 import tempfile
 import base64
 
-from django.core.management.base import BaseCommand
+from django.db.models import Q
 from django.conf import settings
+from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
 
 from activities.models import Activity, ActivityTranslation
-from django.core.files.base import ContentFile
 
 
 class Command(BaseCommand):
@@ -25,7 +26,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['new'] and not options['code']:
-            versions = ActivityTranslation.objects.filter(pdf__isnull=True, master__published=True).order_by('-master__creation_date')
+            versions = ActivityTranslation.objects.filter(Q(pdf='')|Q(pdf=None), master__published=True).order_by('-master__creation_date')
+            sys.stderr.write(f"{versions.count()}")
+            sys.exit()
         elif options['code']:
             try:
                 a = Activity.objects.get(code=options['code'])

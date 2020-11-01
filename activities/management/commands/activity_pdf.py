@@ -27,8 +27,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options['new'] and not options['code']:
             versions = ActivityTranslation.objects.filter(Q(pdf='')|Q(pdf=None), master__published=True).order_by('-master__creation_date')
-            sys.stderr.write(f"{versions.count()}")
-            sys.exit()
         elif options['code']:
             try:
                 a = Activity.objects.get(code=options['code'])

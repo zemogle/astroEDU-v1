@@ -53,7 +53,8 @@ class Command(BaseCommand):
             try:
                 file_obj = version.generate_pdf()
             except Exception as e:
-                self.stederr.write(f"Failed to create  {version.master.code} in {version.language_code}")
+                self.stderr.write(f"{e}")
+                self.stderr.write(f"Failed to create  {version.master.code} in {version.language_code}")
             filename = f'astroedu-{version.master.code}-{version.language_code}.pdf'
             version.pdf.delete(save=False)
             version.pdf.save(filename, ContentFile(file_obj))

@@ -90,12 +90,12 @@
 			<div class="title_text">{% trans "Attachments" %}</div>
             {% if object.attachment_list %}
                 {% for attachment in object.attachment_list %}
-                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="{{ attachment.file.url }}" target="_blank">{{ attachment.display_name }}</a></div>
                 {% endfor %}
             {% endif %}
             {% if object.languageattachment_list %}
                 {% for attachment in object.languageattachment_list %}
-                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="/media/{{ attachment.file.name }}" target="_blank">{{ attachment.display_name }}</a></div>
+                    <div class="content"><img src="{% static 'designimages/attachment_icon.png' %}" alt="" /><a href="{{ attachment.file.url }}" target="_blank">{{ attachment.display_name }}</a></div>
                 {% endfor %}
             {% endif %}
 
@@ -112,8 +112,8 @@
         {% if object.pdf %}
 				<a href="{{ object.pdf.url }}" target="download"><img title="PDF" src="{% static 'designimages/sections-orange/file_pdf.svg' %}" alt="" /></a>
         {% endif %}
-				<a href="{% url 'activities:detail' code=object.code slug=object.slug %}?format=rtf"><img title="RTF" src="{% static 'designimages/sections-orange/file_rtf.svg' %}" alt="" /></a>
-				<a href="{% url 'activities:detail' code=object.code slug=object.slug %}?format=epub"><img title="ePUB" src="{% static 'designimages/sections-orange/file_epub.svg' %}" alt="" /></a>
+				<!-- a href="{% url 'activities:detail' code=object.code slug=object.slug %}?format=rtf"><img title="RTF" src="{% static 'designimages/sections-orange/file_rtf.svg' %}" alt="" /></a>
+				<a href="{% url 'activities:detail' code=object.code slug=object.slug %}?format=epub"><img title="ePUB" src="{% static 'designimages/sections-orange/file_epub.svg' %}" alt="" /></a -->
 			</div>
 		</div>
 		<div class="section_meta_2 grey">

@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.sites',
     'parler',
-    # 'ckeditor',
+    'ckeditor',
     'easy_thumbnails',
     'martor',
 

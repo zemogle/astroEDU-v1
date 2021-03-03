@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'easy_thumbnails',
     'martor',
-
     'django_mistune',
 
     'django_ext',

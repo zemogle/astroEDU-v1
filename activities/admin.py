@@ -8,15 +8,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.http import HttpResponse
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from parler.forms import TranslatableModelForm
 from martor.widgets import AdminMartorWidget
-from martor.fields import MartorFormField
-from mistune import markdown
 
-
-from activities.utils import bleach_clean
 from .models import Activity, ActivityTranslation, Attachment, LanguageAttachment, \
     AuthorInstitution, MetadataOption, Collection, RepositoryEntry, Repository, Location, Link
 
@@ -241,10 +238,14 @@ class ActivityAdmin(TranslatableAdmin):
         return obj.get_absolute_url()
 
     def view_link(self, obj):
-        return '<a href="%s">View</a>' % obj.get_absolute_url()
+        return mark_safe('<a href="%s">View</a>' % obj.get_absolute_url())
 
     def get_countries(self):
         return Location.objects.distinct('country').values('id', 'country')
+
+    def default_title(self, obj):
+        return obj.safe_translation_getter('title', any_language=True)
+
 
     view_link.short_description = ''
     view_link.allow_tags = True
@@ -252,7 +253,7 @@ class ActivityAdmin(TranslatableAdmin):
     counted_fields = ('teaser', )
 
     form = ActivityAdminForm
-    list_display = ('code', 'title', 'all_languages_column', 'author_list', 'published', 'release_date', 'is_released', 'featured', 'doi', 'view_link', )  # , 'thumb_embed', 'list_link_thumbnail', view_link('activities'))
+    list_display = ('code', 'default_title', 'all_languages_column', 'author_list', 'published', 'release_date', 'is_released', 'featured', 'doi', 'view_link', )  # , 'thumb_embed', 'list_link_thumbnail', view_link('activities'))
     list_editable = ('published', 'featured', )
     ordering = ('-release_date', )
     date_hierarchy = 'release_date'

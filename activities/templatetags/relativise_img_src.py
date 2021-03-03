@@ -16,10 +16,7 @@ def _relativise(value, activity, constraint=None):
     new_start = 0
     result = ''
     for m in re.finditer(r'src="(.*?)".*?>', value):
-        new_src = activity.attachment_url(m.group(1))
-        media_root = settings.MEDIA_ROOT
-        if media_root[:-1] != '/':
-            media_root += '/'
+        new_src = m.group(1)
         path = new_src.replace("http://astroedu.iau.org/",'').replace('media/','')
         try:
             new_src = default_storage.url(path)

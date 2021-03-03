@@ -7,14 +7,11 @@ django-storage-url==0.5.0
 boto3==1.16.4
 django-ckeditor
 django-autoslug
-django-parler
+django-parler==2.2
 
 pillow==8.1.1
 sorl-thumbnail
 easy_thumbnails==2.7.1
-django-filer==2.0.2
-django-mptt>=0.6
-django-polymorphic>=0.7
 beautifulsoup4
 bleach
 mistune

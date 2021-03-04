@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from ckeditor.fields import RichTextField
 from sorl.thumbnail import ImageField
 from parler.models import TranslatableModel, TranslatedFieldsModel
 
@@ -47,7 +46,7 @@ class Institution(TranslatableModel):
 
 class InstitutionTranslation(TranslatedFieldsModel):
     master = models.ForeignKey(Institution, related_name='translations', null=True, on_delete=models.CASCADE)
-    description = RichTextField(blank=True, null=True, config_name='small', help_text='Text to appear in Institution page')
+    description = models.TextField(blank=True, null=True, help_text='Text to appear in Institution page')
 
     class Meta:
         unique_together = (

@@ -5,7 +5,6 @@ from django.utils.encoding import iri_to_uri
 
 from parler.models import TranslatableModel, TranslatedFieldsModel
 from parler.managers import TranslatableManager, TranslatableQuerySet
-from ckeditor.fields import RichTextField
 
 from django_ext.models import PublishingModel, PublishingManager
 
@@ -52,7 +51,7 @@ class SmartPageTranslation(TranslatedFieldsModel):
     master = models.ForeignKey(SmartPage, related_name='translations', null=True, on_delete=models.CASCADE)
     url = models.CharField('URL', max_length=100, db_index=True, help_text='Example: "/about/contact/". Make sure to have leading and trailing slashes.')
     title = models.CharField('title', max_length=200)
-    content = RichTextField('content', blank=True, config_name='smartpages', )
+    content = models.TextField('content', blank=True)
 
     class Meta:
         unique_together = (
@@ -77,7 +76,7 @@ class SmartEmbed(TranslatableModel):
 
 class SmartEmbedTranslation(TranslatedFieldsModel):
     master = models.ForeignKey(SmartEmbed, related_name='translations', null=True, on_delete=models.CASCADE)
-    content = RichTextField('content', blank=True, config_name='smartpages', )
+    content = models.TextField('content', blank=True)
 
     class Meta:
         unique_together = (

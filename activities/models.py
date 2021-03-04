@@ -3,7 +3,6 @@ import os
 import io
 
 from autoslug import AutoSlugField
-from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.contrib.staticfiles import finders
 from django.core.files.storage import default_storage

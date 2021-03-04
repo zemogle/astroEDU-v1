@@ -14,7 +14,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 from activities.models import Activity, Collection
 from search.views import simplesearch
-from activities.views import home, about, CollectionListView, CollectionDetailView, markdown_uploader
+from activities.views import home, about, CollectionListView, CollectionDetailView
 
 admin.site.enable_nav_sidebar = False
 

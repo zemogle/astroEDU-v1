@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.sites',
     'parler',
-    'ckeditor',
     'easy_thumbnails',
     'pagedown',
     'django_mistune',
@@ -108,38 +107,6 @@ WSGI_APPLICATION = 'astroedu.wsgi.application'
 DEFAULT_DATABASE_DSN = os.environ.get('DEFAULT_DATABASE_DSN', 'sqlite://:memory:')
 DATABASES = {'default': dj_database_url.parse(DEFAULT_DATABASE_DSN)}
 
-CKEDITOR_UPLOAD_PATH = 'upload/'
-CKEDITOR_CONFIGS = {
-    ## see http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
-    'smartpages': {
-        'fillEmptyBlocks': False,
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Source', ],
-            ['Format', ],
-            ['Bold', 'Italic', '-', 'Underline', 'Subscript', 'Superscript', '-', 'Undo', 'Redo', 'RemoveFormat', ],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', ],
-            ['Link', 'Unlink', ],
-            ['Image', 'Table', 'SpecialChar', ],
-            ['Maximize', 'ShowBlocks', ],
-            ['BidiLtr', 'BidiRtl', ],
-        ],
-        'width': 845,
-    },
-    'small': {
-        'fillEmptyBlocks': False,
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Source', ],
-            ['Bold', 'Italic', '-', 'Subscript', 'Superscript', '-', 'Undo', 'Redo', 'RemoveFormat', ],
-            ['Link', 'Unlink', ],
-            # ['Image', ],
-            ['BidiLtr', 'BidiRtl', ],
-        ],
-        'height': 100,
-    },
-
-}
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

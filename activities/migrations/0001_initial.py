@@ -2,7 +2,6 @@
 
 import activities.models
 import autoslug.fields
-import ckeditor.fields
 from django.db import migrations, models
 import django.db.models.deletion
 import parler.models
@@ -186,7 +185,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('language_code', models.CharField(db_index=True, max_length=15, verbose_name='Language')),
                 ('title', models.CharField(max_length=255, verbose_name='Title')),
-                ('description', ckeditor.fields.RichTextField(blank=True, null=True, verbose_name='General introduction')),
+                ('description', models.TextField(blank=True, null=True, verbose_name='General introduction')),
                 ('master', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='translations', to='activities.JourneyCategory')),
             ],
             options={

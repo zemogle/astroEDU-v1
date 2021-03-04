@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .forms import SmartPageForm
-from .models import SmartPage, SmartEmbed
+from django.db import models
+from pagedown.widgets import AdminPagedownWidget
 from parler.admin import TranslatableAdmin
 
-# from django.utils.translation import ugettext_lazy as _
+from .forms import SmartPageForm
+from .models import SmartPage, SmartEmbed
 
 
 @admin.register(SmartPage)
@@ -23,6 +24,9 @@ class SmartPageAdmin(TranslatableAdmin):
     # list_filter = ('sites', 'registration_required')
     search_fields = ('title', )
     readonly_fields = ('code', )
+    formfield_overrides = {
+        models.TextField: {'widget': AdminPagedownWidget },
+    }
 
 
 @admin.register(SmartEmbed)

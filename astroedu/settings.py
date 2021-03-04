@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'parler',
     'easy_thumbnails',
     'pagedown',
+    'martor',
     'django_mistune',
 
     'django_ext',

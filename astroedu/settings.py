@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'parler',
     'easy_thumbnails',
     'pagedown',
-    'martor',
     'django_mistune',
+    'martor',
 
     'django_ext',
     'smartpages',
@@ -213,6 +213,35 @@ MISTUNE_STYLES = {
     # 'skip_style': True,
     # 'skip_html': True,
 }
+
+MARTOR_THEME = 'bootstrap'
+
+# Global martor settings
+# Input: string boolean, `true/false`
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'false',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
+    'jquery': 'true',       # to include/revoke jquery (require for admin default django)
+    'living': 'false',      # to enable/disable live updates in preview
+    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
+    'hljs': 'true',         # to enable/disable hljs highlighting in preview
+}
+
+MARTOR_MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.smarty',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.tables',
+
+    # Custom markdown extensions.
+    'martor.extensions.urlize',
+    'martor.extensions.del_ins',      # ~~strikethrough~~ and ++underscores++
+    'martor.extensions.mention',      # to parse markdown mention
+    'martor.extensions.mdx_video',    # to parse embed/iframe video
+]
+
 
 
 PAGEDOWN_IMAGE_UPLOAD_PATH = 'activities/attach/'

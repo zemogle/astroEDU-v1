@@ -7,6 +7,7 @@ django-storage-url==0.5.0
 boto3==1.16.4
 django-autoslug
 django-parler==2.2
+django-pagedown
 
 pillow==8.1.1
 sorl-thumbnail

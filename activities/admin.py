@@ -12,7 +12,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from parler.forms import TranslatableModelForm
-from martor.widgets import AdminMartorWidget
+from pagedown.widgets import AdminPagedownWidget
 
 from .models import Activity, ActivityTranslation, Attachment, LanguageAttachment, \
     AuthorInstitution, MetadataOption, Collection, RepositoryEntry, Repository, Location, Link
@@ -84,7 +84,6 @@ class ActivityAdminForm(TranslatableModelForm):
             'supervised': forms.RadioSelect,
             'cost': forms.RadioSelect,
             'location': forms.RadioSelect,
-            'teaser': forms.TextInput(attrs={'class': 'vTextField'}),
         }
 
     def clean_code(self):
@@ -113,126 +112,8 @@ class MembershipInline(admin.TabularInline):
     model = Collection.activities.through
 
 
-def activities_csv(modeladmin, request, queryset):
-    from django.utils import translation
-
-    header = [
-        'URL location of the English version of this activity',
-        'URL location of the French version of this activity',
-        'URL location of the German version of this activity',
-        'URL location of the other language versions of this activity',
-        'URL of the thumbnail',
-        'Activity title',
-        'Age',
-        'Time',
-        'Groupsize (group/individual)',
-        'Level',
-        'Cost',
-        'Supervised',
-        'Location',
-        'Core skills',
-        'Type of learning activity',
-        'Keywords',
-        'Big idea of science',
-        'Theme',
-        'Teaser',
-        'Brief description',
-        'Goals',
-        'Learning objectives',
-        'Evaluation',
-        'Materials',
-        'Background information',
-        'Full Activity description',
-        'Connection to school  curriculum',
-        'Additional information',
-        'Conclusion',
-        'Space Awareness authorship',
-        'Source name',
-        'Source URL',
-        'URL to additional documents (attachments), English',
-        'URL to additional documents (attachments), other languages'
-    ]
-
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=activities.csv'
-
-    writer = unicodecsv.writer(response, encoding='utf-8')
-    writer.writerow(header)
-
-    for activity in queryset:
-        activity.set_current_language('en')
-        translation.activate('en')
-        url = urljoin(settings.SITE_URL,
-                      reverse('activities:detail', kwargs={'code': activity.code, 'slug': activity.slug}))
-
-        if activity.has_translation('fr'):
-            translation.activate('fr')
-            activity.set_current_language('fr')
-            url_fr = urljoin(settings.SITE_URL,
-                            reverse('activities:detail', kwargs={'code': activity.code, 'slug': activity.slug}))
-        else:
-            url_fr = ''
-
-        if activity.has_translation('de'):
-            translation.activate('de')
-            activity.set_current_language('de')
-            url_de = urljoin(settings.SITE_URL,
-                             reverse('activities:detail', kwargs={'code': activity.code, 'slug': activity.slug}))
-        else:
-            url_de = ''
-        url_others_list = []
-        for language_code, language_name in settings.LANGUAGES:
-            if language_code not in ['en', 'fr', 'de'] and activity.has_translation(language_code):
-                translation.activate('en')
-                activity.set_current_language(language_code)
-                url_others_list.append(urljoin(settings.SITE_URL, reverse('activities:detail',
-                                                                          kwargs={'code': activity.code,
-                                                                                  'slug': activity.slug})))
-        activity.set_current_language('en')
-
-        row = [
-            url,
-            url_fr,
-            url_de,
-            ','.join(url_others_list),
-            activity.title,
-            ','.join(activity.age.values_list('title', flat=True).all()),
-            activity.time.title if activity.time else '',
-            activity.group.title if activity.group else '',
-            ','.join(activity.level.values_list('title', flat=True).all()),
-            activity.cost.title if activity.cost else '',
-            activity.supervised.title if activity.supervised else '',
-            ','.join(activity.skills.values_list('title', flat=True).all()),
-            activity.learning.title if activity.learning else '',
-            activity.keywords,
-            activity.big_idea,
-            activity.theme,
-            activity.teaser,
-            activity.description,
-            activity.goals,
-            activity.objectives,
-            activity.evaluation,
-            activity.materials,
-            activity.background,
-            activity.fulldesc,
-            activity.curriculum,
-            activity.additional_information,
-            activity.conclusion,
-            activity.spaceawe_authorship,
-            activity.sourcelink_name,
-            activity.sourcelink_url,
-            '',
-            ''
-        ]
-
-        writer.writerow(row)
-    return response
-
-
-activities_csv.short_description = "Generate CSV from activities"
-
-
 class ActivityAdmin(TranslatableAdmin):
+    form = ActivityAdminForm
 
     def view_on_site(self, obj):
         return obj.get_absolute_url()
@@ -258,7 +139,6 @@ class ActivityAdmin(TranslatableAdmin):
     ordering = ('-release_date', )
     date_hierarchy = 'release_date'
     list_filter = ('age', 'level', 'time', 'group', 'supervised', 'cost', 'location')
-    actions = [activities_csv]
 
     inlines = [AuthorInstitutionInline, ActivityAttachmentInline, ActivityLanguageAttachmentInline, RepositoryEntryInline, MembershipInline, LinkInline]
 
@@ -292,8 +172,7 @@ class ActivityAdmin(TranslatableAdmin):
     readonly_fields = ('is_released', )
     formfield_overrides = {
         models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
-        models.TextField: {'widget': AdminMartorWidget},
-
+        models.TextField: {'widget': AdminPagedownWidget},
     }
 
     fieldsets_and_inlines_order = ('f', 'f', 'i', )  # order of fields: first fieldset, then first inline, then everything else as usual

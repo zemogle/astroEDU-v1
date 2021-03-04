@@ -24,8 +24,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('martor/', include('martor.urls')),
-    path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
+     path('', include('pagedown.urls')),
     ]
 
 urlpatterns += i18n_patterns(

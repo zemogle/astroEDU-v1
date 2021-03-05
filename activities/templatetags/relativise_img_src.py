@@ -17,11 +17,13 @@ def _relativise(value, activity, constraint=None):
     result = ''
     for m in re.finditer(r'src="(.*?)".*?>', value):
         new_src = m.group(1)
-        path = new_src.replace("http://astroedu.iau.org/",'').replace('media/','')
-        try:
-            new_src = default_storage.url(path)
-        except:
-            new_src = "https://via.placeholder.com/200x200?text=No+Image"
+        # Only replace image src if URL not DIVIO cloud hosting
+        if not new_src.startswith('https://astroedu-'):
+            path = new_src.replace("http://astroedu.iau.org/",'').replace('media/','')
+            try:
+                new_src = default_storage.url(path)
+            except:
+                new_src = "https://via.placeholder.com/200x200?text=No+Image"
         result += value[new_start:m.start()] + '<img src="%s"/>' % new_src
         new_start = m.end()
     result += value[new_start:]

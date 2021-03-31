@@ -1,4 +1,5 @@
 {% load i18n static easy_thumbnails_tags %}
+{% if object.is_released or request.user.is_authenticated %}
     <div class="list_item{% if not object.is_released%} unpublished{% endif %}">
 
     	<div class="title"><a href="{% url 'activities:detail' code=object.code slug=object.slug %}">{{ object.title }}</a></div>
@@ -48,3 +49,4 @@
         </div>
 
     </div>
+{% endif %}

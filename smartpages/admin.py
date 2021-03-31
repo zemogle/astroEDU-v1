@@ -13,20 +13,11 @@ class SmartPageAdmin(TranslatableAdmin):
     fieldsets = (
         (None, {'fields': ('code', 'url', 'title', 'content', 'release_date' )}),
     )
-    # fieldsets = (
-    #     (None, {'fields': ('code', 'url', 'title', 'content', )}),
-    #     # (_('Advanced options'), {
-    #     #     'classes': ('collapse',),
-    #     #     'fields': ('registration_required', 'template_name'),
-    #     # }),
-    # )
+
     list_display = ('title', 'all_languages_column', )
-    # list_filter = ('sites', 'registration_required')
     search_fields = ('title', )
     readonly_fields = ('code', )
-    formfield_overrides = {
-        models.TextField: {'widget': AdminPagedownWidget },
-    }
+
 
 
 @admin.register(SmartEmbed)

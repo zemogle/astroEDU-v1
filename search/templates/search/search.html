@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles thumbnail i18n %}
 
-{% comment %}<!-- 
+{% comment %}<!--
 page.object_list = [activity1, ... ]
 page.has_previous
 page.has_next
@@ -23,7 +23,9 @@ page.next_page_number
     <div class="archives_list">
 
         {% for result in page.object_list %}
+          {% if result.object.is_released or request.user.is_authenticated %}
             <!-- {{ result.score|floatformat:2}}  -->{% include 'activities/activity_list_item.html' with object=result.object %}
+          {% endif %}
         {% empty %}
             <p class="notfound"><img src="{% static 'designimages/search_notfound.svg' %}" alt="" /> {% trans 'No results found!' %}</p>
         {% endfor %}
@@ -38,7 +40,7 @@ page.next_page_number
     </div>
 
     {% else %}
-    <p class="notfound"><img src="{% static 'designimages/search_notfound.svg' %}" alt="" /> {% trans 'No results found!' %}</p> 
+    <p class="notfound"><img src="{% static 'designimages/search_notfound.svg' %}" alt="" /> {% trans 'No results found!' %}</p>
     {% endif %}
 
 
@@ -102,4 +104,3 @@ function setfacet(name, value) {
 }
 </script>
 {% endblock %}
-

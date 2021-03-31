@@ -2,6 +2,8 @@ from django import forms
 from django.conf import settings
 from parler.forms import TranslatableModelForm
 from django.utils.translation import ugettext, ugettext_lazy as _
+from pagedown.widgets import AdminPagedownWidget
+
 from .models import SmartPage
 
 
@@ -15,6 +17,10 @@ class SmartPageForm(TranslatableModelForm):
     class Meta:
         model = SmartPage
         fields = ('code', 'url', 'title', 'content', )
+        widgets = {
+            'content': AdminPagedownWidget,
+
+        }
 
     def clean_url(self):
         url = self.cleaned_data['url']

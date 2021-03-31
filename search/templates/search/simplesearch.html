@@ -23,7 +23,7 @@ page.next_page_number
     <div class="archives_list">
 
         {% for result in page.object_list %}
-            <!-- {{ result.score|floatformat:2}}  -->{% include 'activities/activity_list_item.html' with object=result.master %}
+          {% include 'activities/activity_list_item.html' with object=result.object %}
         {% empty %}
             <p class="notfound"><img src="{% static 'designimages/search_notfound.svg' %}" alt="" /> {% trans 'No results found!' %}</p>
         {% endfor %}

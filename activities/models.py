@@ -242,7 +242,7 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         return '%s - %s' % (self.code, self.language)
 
     def get_absolute_url(self):
-        return reverse('activities:detail', kwargs={'code': self.code, 'slug': self.slug, })
+        return reverse('activities:detail-code', kwargs={'code': self.code, })
 
     def get_short_url_full(self):
         if settings.SHORT_NAME == 'astroedu':

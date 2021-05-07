@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.redirects',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'parler',
     'easy_thumbnails',
     'pagedown',

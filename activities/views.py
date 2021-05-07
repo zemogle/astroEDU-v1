@@ -5,6 +5,7 @@ from django_ext import compiler
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import Http404, HttpResponse
@@ -118,6 +119,9 @@ class ActivityDetailView(DetailView):
         else:
             return super().get(request, args, kwargs)
 
+class ActivitybySlug(ActivityDetailView):
+    slug_field = 'translations__slug'
+    slug_url_kwarg = 'name'
 
 class ActivityDetailPrintView(ActivityDetailView):
     template_name = 'activities/activity_detail_print.html'
@@ -139,7 +143,10 @@ def detail_by_code(request, code):
 
 def detail_by_slug(request, slug):
     'When only the slug is provided, try to redirect to the canonical URL (old style astroEDU URLs)'
-    obj = _activity_queryset(request, only_translations=False).get(translations__slug=slug)
+    try:
+        obj = _activity_queryset(request, only_translations=False).get(translations__slug=slug)
+    except Activity.DoesNotExist:
+        raise Http404("Activity does not exist")
     return redirect(obj, permanent=True)
 
 

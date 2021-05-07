@@ -108,7 +108,7 @@
 
     {% if object.master.attachment_list|length > 1 or object.master.languageattachment_list|length > 1 %}
         <div class="title_text">{% trans "All Attachments" %}</div>
-        <a href="{% url 'activities:detail' code=object.master.code slug=object.slug %}?format=zip">All attachments</a>
+        <a href="{% url 'activities:detail-code' code=object.master.code %}?format=zip">All attachments</a>
     {% endif %}
 
 		</div>

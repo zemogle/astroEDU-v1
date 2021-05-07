@@ -2,17 +2,17 @@
 {% if object.is_released or request.user.is_authenticated %}
     <div class="list_item{% if not object.is_released%} unpublished{% endif %}">
 
-    	<div class="title"><a href="{% url 'activities:detail' code=object.code slug=object.slug %}">{{ object.title }}</a></div>
+    	<div class="title"><a href="{% url 'activities:detail-code' code=object.code %}">{{ object.title }}</a></div>
 
         <div class="metadata">
             DATE: <b style="bold">{{ object.release_date|date:"Y-m-d" }}</b>
-            <a href="{% url 'activities:detail' code=object.code slug=object.slug %}"><img src="{% static 'designimages/metaseparator.png' %}" alt="" /></a>
+            <a href="{% url 'activities:detail-code' code=object.code %}"><img src="{% static 'designimages/metaseparator.png' %}" alt="" /></a>
             BY:  <b>{{ object.author_list }}</b>
         </div>
 
         <div class="description">
             {% if object.main_visual %}
-            <a href="{% url 'activities:detail' code=object.code slug=object.slug %}"><img src="{{ object.main_visual.url }}?q=6976" alt="{{object.title}}" /></a>{% endif %}
+            <a href="{% url 'activities:detail-code' code=object.code %}"><img src="{{ object.main_visual.url }}?q=6976" alt="{{object.title}}" /></a>{% endif %}
             <div class="list_item_short">{{ object.teaser }}</div>
         </div>
 
@@ -41,7 +41,7 @@
                 <div class="value">{{ object.time }}</div>
             </div>
             <div class="link_col">
-                <a href="{% url 'activities:detail' code=object.code slug=object.slug %}">
+                <a href="{% url 'activities:detail-code' code=object.code %}">
                     <img src="{% static 'designimages/arrow_next.svg' %}" alt="View activity" />
                 </a>
             </div>

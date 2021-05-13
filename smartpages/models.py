@@ -6,7 +6,7 @@ from django.utils.encoding import iri_to_uri
 from parler.models import TranslatableModel, TranslatedFieldsModel
 from parler.managers import TranslatableManager, TranslatableQuerySet
 
-from django_ext.models import PublishingModel, PublishingManager
+from activities.models import PublishingModel, PublishingManager
 
 
 class SmartPageQuerySet(TranslatableQuerySet):

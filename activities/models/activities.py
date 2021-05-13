@@ -16,9 +16,9 @@ from sorl.thumbnail import ImageField
 from urllib.parse import urlparse
 from weasyprint import HTML, CSS
 
-from django_ext.models import PublishingModel, PublishingManager
-from django_ext.models.spaceawe import SpaceaweModel
-from . import utils
+from .publishing import PublishingModel, PublishingManager
+from .spaceawe import SpaceaweModel
+from activities import utils
 from institutions.models import Institution, Person, Location
 
 from search.mixins import SearchModel
@@ -452,7 +452,10 @@ class RepositoryEntry(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '%s - %s' % (self.repo.name, self.url)
+        try:
+            return '%s - %s' % (self.repo.name, self.url)
+        except AttributeError:
+            return self.url
 
     class Meta:
         ordering = ['repo']

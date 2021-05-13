@@ -1,7 +1,6 @@
 import os
 import json
 import uuid
-from django_ext import compiler
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import Feed
@@ -16,11 +15,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 from parler.views import ViewUrlMixin, TranslatableSlugMixin
 
+from .utils import get_generated_url
 from .models import Activity, Collection, ACTIVITY_SECTIONS, ACTIVITY_METADATA
 
 
 def home(request):
-
     return render(request, 'home.html',
                   {'featured': Activity.objects.featured().active_translations()[0:3],})
 
@@ -73,8 +72,6 @@ class ActivityListView(ViewUrlMixin, ListView):
         else:
             return reverse('activities:list_by_category', kwargs={'category': self.kwargs.get('category', self.all_categories)})
 
-        #    return super().get_view_url()
-
     def get_template_names(self):
         if self.request.is_ajax():
             return [self.page_template_name]
@@ -91,8 +88,6 @@ class ActivityListView(ViewUrlMixin, ListView):
 
 
 class ActivityDetailView(DetailView):
-    # model = Activity
-    # template_name = 'activities/detail.html'
     slug_field = 'code'
     slug_url_kwarg = 'code'
     view_url_name = 'activities:detail'
@@ -112,7 +107,7 @@ class ActivityDetailView(DetailView):
         fmt = request.GET.get('format')
         if hasattr(settings, 'ACTIVITY_DOWNLOADS') and fmt in settings.ACTIVITY_DOWNLOADS['renderers'].keys():
             code = kwargs[self.slug_url_kwarg]
-            url = compiler.get_generated_url(settings.ACTIVITY_DOWNLOADS, fmt, code, lang=get_language())
+            url = get_generated_url(settings.ACTIVITY_DOWNLOADS, fmt, code, lang=get_language())
             if not url:
                 raise Http404
             return redirect(url)

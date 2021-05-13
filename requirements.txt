@@ -14,7 +14,6 @@ sorl-thumbnail
 easy_thumbnails==2.7.1
 beautifulsoup4
 bleach
-mistune
 rtfunicode
 html5lib==0.9999999  # the latest html5lib==0.999999999 install fails
 WeasyPrint

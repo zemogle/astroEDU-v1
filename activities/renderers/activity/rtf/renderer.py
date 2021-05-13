@@ -43,29 +43,6 @@ class RtfFlattener(Flattener):
         return result
 
 
-# class HtmlFlattener(Flattener):
-
-#     # def empty_inline(self):
-#     #     return ''
-
-#     def inline(self, text=None):
-#         return '' if text is None else text
-
-#     def double_emphasis(self, content):
-#         return '<strong>%s</strong>' % content
-
-#     def emphasis(self, content):
-#         return '<em>%s</em>' % content
-
-#     def strikethrough(self, content):
-#         return '<del>%s</del>' % content
-
-#     def link(self, link, content):
-#         if link != content:
-#             content += ' (%s)' % link
-#         return '<a href="%s">%s</a>' % (link, content)
-
-
 def markdown_rtfcommand(text, inline=None, block=None):
     tree = markdown(text, TreeRenderer(), inline, block)
     result = RtfFlattener().parse(tree)
@@ -117,7 +94,7 @@ def render(obj, filename):
     # doc.meta['company'] = 'astroEDU'
     doc.meta['keywords'] = obj.keywords
     doc.meta['doccomm'] = obj.teaser
-    # doc.meta['copyright'] = 
+    # doc.meta['copyright'] =
 
     doc.append(Paragraph([obj.title], style='Heading 1'))
     doc.append(Paragraph([obj.teaser]))

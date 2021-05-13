@@ -2,13 +2,48 @@
 import os
 import re
 import urllib
+import logging
+import time
+import importlib
 
 import bleach
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives, send_mail, BadHeaderError
 from django.conf import settings
-# from django.contrib.sites.models import Site
+from django.core.management.base import BaseCommand
 
+# Get an instance of a logger
+logger = logging.getLogger('astroEDU')
+
+
+def get_python_thing(fullname):
+    module_name, thing_name = fullname.rsplit('.', 1)
+    module = importlib.import_module(module_name)
+    return getattr(module, thing_name)
+
+
+def generate_one(objdef, obj, file_type, force=False, site_url=None):
+    ctx = {'slug': obj.slug, 'code': obj.code, 'ext': file_type}
+    if hasattr(obj, 'language_code'):
+        ctx['lang'] = obj.language_code
+    filename = objdef['filename_tpl'] % ctx
+    path = os.path.join(settings.MEDIA_ROOT, objdef['path'], filename)
+    if force or (not (os.path.exists(path) and os.path.getmtime(path) > time.mktime(obj.modification_date.timetuple()))):
+        if not site_url:
+            site_url = settings.SITE_URL
+        renderer = get_python_thing(objdef['renderers'][file_type])
+        renderer(obj, path, site_url=site_url)
+    return filename
+
+
+def get_generated_url(objdef, file_type, code, lang=None):
+    model = get_python_thing(objdef['model'])
+    if lang:
+        obj = model.objects.available().language(lang).get(code=code)
+    else:
+        obj = model.objects.available().get(code=code)
+    filename = generate_one(objdef, obj, file_type)
+    return settings.MEDIA_URL + objdef['path'] + filename
 
 def beautify_age_range(age_ranges):
     'Unifies a list of age ranges into a string. Input list must be sorted.'

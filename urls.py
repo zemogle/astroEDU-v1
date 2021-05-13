@@ -30,7 +30,7 @@ urlpatterns = i18n_patterns(
     path('collections/', include(('activities.urls_collections','collections'), namespace='collections')),
 
     path('admin/about/', about, name='about'),
-    # path('admin/history/', include('djangoplicity.adminhistory.urls', namespace='adminhistory_site')),
+    path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('admin/', admin.site.urls),
 
     path('sitemap.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')

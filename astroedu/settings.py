@@ -156,6 +156,7 @@ PARLER_LANGUAGES = {
 }
 
 ADMIN_SITE_TITLE  = 'astroEDU admin'
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__name__))
 LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )

@@ -23,11 +23,7 @@ sitemaps = {
     'collections': Collection.sitemap(priority=0.6),
 }
 
-urlpatterns = [
-     path('', include('pagedown.urls')),
-    ]
-
-urlpatterns += i18n_patterns(
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
@@ -41,9 +37,14 @@ urlpatterns += i18n_patterns(
     # path('admin/history/', include('djangoplicity.adminhistory.urls', namespace='adminhistory_site')),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage'),
+    # url(r'^page/(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage'),
+    url(r'^(?P<url>.*/)$', SmartPageView.as_view(), name='smartpage')
 
 )
+
+# urlpatterns += [
+#      path('', include('pagedown.urls')),
+#     ]
 
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

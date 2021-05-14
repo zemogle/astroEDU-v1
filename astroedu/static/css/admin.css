@@ -50,7 +50,7 @@ table {
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #ddd;
-    border-collapse: collapse; 
+    border-collapse: collapse;
     border-spacing: 0;
 }
 table > thead > tr > th,
@@ -149,7 +149,7 @@ a.deletelink:link, a.deletelink:visited {
 }
 
 #login-form .submit-row {
-    background: white !important; 
+    background: white !important;
 }
 #login-form .submit-row input {
     background: #faaf3f !important;
@@ -213,3 +213,16 @@ select {
     width: 80%;
 }
 
+fieldset .form-row div>label {
+    display: block !important;
+    padding: 4px 10px 0 0;
+    float: left;
+    width: 160px;
+    word-wrap: break-word;
+    line-height: 1;
+}
+
+fieldset .fieldBox {
+      float: left;
+      margin-right: 20px;
+  }

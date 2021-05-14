@@ -214,7 +214,7 @@ MISTUNE_STYLES = {
     # 'skip_html': True,
 }
 
-MARTOR_THEME = 'bootstrap'
+MARTOR_THEME = 'semantic'
 
 # Global martor settings
 # Input: string boolean, `true/false`
@@ -242,11 +242,16 @@ MARTOR_MARKDOWN_EXTENSIONS = [
     'martor.extensions.mdx_video',    # to parse embed/iframe video
 ]
 
+import time
+MARTOR_UPLOAD_PATH = 'images/uploads/{}'.format(time.strftime("%Y/%m/%d/"))
+MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
+MAX_IMAGE_UPLOAD_SIZE = 5242880  # 5MB
 
 
-PAGEDOWN_IMAGE_UPLOAD_PATH = 'activities/attach/'
-PAGEDOWN_IMAGE_UPLOAD_ENABLED=True
-PAGEDOWN_IMAGE_UPLOAD_UNIQUE = True
+
+# PAGEDOWN_IMAGE_UPLOAD_PATH = 'activities/attach/'
+# PAGEDOWN_IMAGE_UPLOAD_ENABLED=True
+# PAGEDOWN_IMAGE_UPLOAD_UNIQUE = True
 
 TEMPLATE_STRING_IF_INVALID = 'temp'
 

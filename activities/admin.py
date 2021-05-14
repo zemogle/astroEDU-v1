@@ -12,7 +12,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
 from parler.forms import TranslatableModelForm
-from pagedown.widgets import AdminPagedownWidget
+
+from martor.widgets import AdminMartorWidget
 
 from .models import Activity, ActivityTranslation, Attachment, LanguageAttachment, \
     AuthorInstitution, MetadataOption, Collection, RepositoryEntry, Repository, Location, Link
@@ -172,15 +173,15 @@ class ActivityAdmin(TranslatableAdmin):
     readonly_fields = ('is_released', )
     formfield_overrides = {
         models.ManyToManyField: {'widget': forms.CheckboxSelectMultiple},
-        models.TextField: {'widget': AdminPagedownWidget},
+        models.TextField: {'widget': AdminMartorWidget},
     }
 
     fieldsets_and_inlines_order = ('f', 'f', 'i', )  # order of fields: first fieldset, then first inline, then everything else as usual
 
-    class Media:
-        js = [
-            '/static/js/admin.js',
-        ]
+    # class Media:
+    #     js = [
+    #         '/static/js/admin.js',
+    #     ]
 
 
 class CollectionAdminForm(TranslatableModelForm):

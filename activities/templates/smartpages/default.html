@@ -10,7 +10,7 @@
 
 <div class="layout_content"><div class="layout_container"><div class="layout_flatpage">
 	<h1>{{ object.title }}</h1>
-	{{ object.content|safe }}
+	{{ object.content|safe_markdown }}
 </div></div></div>
 
 {% endblock %}

@@ -14,7 +14,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 from activities.models import Activity, Collection
 from search.views import simplesearch
-from activities.views import home, about, CollectionListView, CollectionDetailView
+from activities.views import home, about, CollectionListView, CollectionDetailView, markdown_uploader
 
 admin.site.enable_nav_sidebar = False
 
@@ -42,9 +42,10 @@ urlpatterns = i18n_patterns(
 
 )
 
-# urlpatterns += [
-#      path('', include('pagedown.urls')),
-#     ]
+urlpatterns += [
+    path('martor/', include('martor.urls')),
+    path('api/uploader/', markdown_uploader, name='markdown_uploader_page'),
+]
 
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

@@ -16,10 +16,12 @@ from django.views.generic import ListView, DetailView
 from parler.views import ViewUrlMixin, TranslatableSlugMixin
 
 from .utils import get_generated_url
-from .models import Activity, Collection, ACTIVITY_SECTIONS, ACTIVITY_METADATA
+from .models import Activity, Collection, ACTIVITY_SECTIONS, ACTIVITY_METADATA, MetadataOption
 
 from martor.utils import LazyEncoder
 
+import logging
+logger = logging.getLogger(__name__)
 
 @login_required
 def markdown_uploader(request):
@@ -85,30 +87,26 @@ def _activity_queryset(request, only_translations=True):
 
 
 class ActivityListView(ViewUrlMixin, ListView):
-    # template_name = 'activities/list.html'
     page_template_name = 'activities/activity_list_page.html'
-    # context_object_name = 'object_list'
-    # model = Activity
     view_url_name = 'activities:list'
-    # paginate_by = 10
+    paginate_by = 10
     all_categories = 'all'
 
     def get_queryset(self):
         qs = _activity_queryset(self.request)
         # if category and level is selected, combine filters
-        if self.kwargs.get('category', self.all_categories) != self.all_categories and 'level' in self.kwargs:
-            category = self.kwargs['category']
-            level = self.kwargs['level']
-            qs = qs.filter(**{category: True}).filter(level__code=level)
-        # only for selected category without level
-        elif self.kwargs.get('category', self.all_categories) != self.all_categories:
+        kwargs = self.request.GET
+        if self.kwargs.get('category', self.all_categories) != self.all_categories:
             category = self.kwargs['category']
             qs = qs.filter(**{category: True})
-        # select level for all categories
-        elif 'level' in self.kwargs:
-            level = self.kwargs['level']
+
+        if 'level' in kwargs:
+            level = kwargs['level']
             # qs = qs.filter(level__code__in=[level])
             qs = qs.filter(level__code=level)
+        if 'age' in kwargs:
+            age = kwargs['age']
+            qs = qs.filter(age__code=age)
         return qs
 
     def get_view_url(self):
@@ -126,6 +124,8 @@ class ActivityListView(ViewUrlMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['levels'] = MetadataOption.objects.filter(group='level')
+        print(context)
         context['sections_meta'] = ACTIVITY_METADATA
         context['page_template'] = self.page_template_name
         context['all_categories'] = self.all_categories

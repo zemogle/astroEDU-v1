@@ -222,7 +222,7 @@ fieldset .form-row div>label {
     line-height: 1;
 }
 
-fieldset .fieldBox {
+fieldset .form-row>div.fieldBox {
       float: left;
       margin-right: 20px;
   }

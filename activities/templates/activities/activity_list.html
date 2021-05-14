@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 
 {% block content %}
 
-<div class="layout_content"><div class="layout_container"><div class="layout_leftcolumn">
+<div class="layout_content">
+  <div class="layout_container"><div class="layout_leftcolumn">
 {% if object_list %}
 <div class="archives_list">
     {% for object in object_list %}
@@ -16,9 +18,44 @@
 
 
 
-</div><div class="layout_rightcolumn">
-</div><div style="clear: both;">
-</div></div></div>
+</div>
+<div class="layout_rightcolumn">
+  <div class="section_meta">
+    <div class="section_meta_inner">
+      <div class="facet">
+          <div class="title_text">{% trans 'Level' %}</div>
+          {% for option in levels %}
+          <div class="content">
+              <span class="facet_option" ><a href="?level={{option.code}}">{% trans option.title %}</a></span>
+          </div>
+          {% endfor %}
+      </div>
+      <div style="clear: both"></div>
+  </div></div>
+</div>
+<div style="clear: both;">
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+</div>
 
 
 {% endblock %}

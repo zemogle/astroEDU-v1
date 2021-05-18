@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static easy_thumbnails_tags i18n martortags getattribute relativise_img_src%}
+{% load static easy_thumbnails_tags i18n martortags getattribute relativise_img_src admin_urls %}
 
 {% block site_title %}{{ object.title }} | astroEDU {% endblock %}
 
@@ -17,11 +17,11 @@
 <div class="admin-toolbar{% if not object.is_released%} unpublished{% endif %}">
     {% if object %}
 	<div class"modeladmin">
-		<a href="{{ object.get_admin_change_url }}">{% trans "Edit" %}</a> |
-		<a href="{{ object.get_admin_delete_url }}">{% trans "Delete" %}</a> |
-		<a href="{{ object.get_admin_history_url }}">{% trans "History" %}</a> |
-		<a href="{{ object.get_admin_add_url }}">{% trans "Add another" %} {{ object.get_verbose_name }}</a> |
-		<a href="{{ object.get_admin_changelist_url }}">{% trans "Manage" %} {{ object.get_verbose_name_plural }}</a>
+		<a href="{% url 'admin:activities_activity_change' object.id %}">{% trans "Edit" %}</a> |
+		<a href="{% url 'admin:activities_activity_delete' object.id %}">{% trans "Delete" %}</a> |
+		<a href="{% url 'admin:activities_activity_history' object.id %}">{% trans "History" %}</a> |
+		<a href="{% url 'admin:activities_activity_add' %}">{% trans "Add another" %} {{ object.get_verbose_name }}</a> |
+		<a href="{% url 'admin:activities_activity_changelist' %}">{% trans "Manage" %} {{ object.get_verbose_name_plural }}</a>
 	</div>
     {% endif %}
     <div class="archival">

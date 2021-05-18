@@ -40,15 +40,15 @@ ul.unbulleted {
 
 .layout_leftcolumn table, .layout_flatpage table {
     margin-top: 1em;
-    margin-left: auto; 
-    margin-right: auto;    
+    margin-left: auto;
+    margin-right: auto;
 }
 .layout_leftcolumn th, .layout_flatpage th {
     font-weight: bold;
 }
 .layout_leftcolumn td, .layout_leftcolumn th, .layout_flatpage td, .layout_flatpage th {
     border: solid thin #6C6C70;
-    margin: 4px; 
+    margin: 4px;
     padding-left: 4px; padding-right: 4px;
     padding-top: 4px; padding-bottom: 4px;
     font-size: 85%;
@@ -62,13 +62,13 @@ body {
     background-color: #F6F6F6;
 }
 .curvy_bg {
-    height: 228px; 
-    width: 100%; 
-    position: absolute; 
-    top: 0px; 
-    left: -26px; 
-    z-index: -1; 
-    background-image: url("../designimages/curvy_bg.png"); 
+    height: 228px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: -26px;
+    z-index: -1;
+    background-image: url("../designimages/curvy_bg.png");
     background-repeat: no-repeat;
 }
 .unpublished {
@@ -93,7 +93,7 @@ body {
     font-size: 14px;
     margin: 12px 0 0 0;
 }
-#cookie-policy a { 
+#cookie-policy a {
     text-decoration: underline;
 }
 span.close-btn {
@@ -107,7 +107,7 @@ span.close-btn img {
 
 /* grid */
 .body_wrap {
-    min-width: 100%; 
+    min-width: 100%;
 }
 .layout_container {
     margin-left: auto;
@@ -140,7 +140,7 @@ span.close-btn img {
     display: inline-block;
 }
 .top_right {
-    float: right; 
+    float: right;
     margin-top: 28px;
 }
 .top_right a {
@@ -162,7 +162,7 @@ span.close-btn img {
 }
 .layout_resources {
     background-color: #EEEEEE;
-    height: auto;    
+    height: auto;
     padding: 64px 0;
 }
 .top_right img {
@@ -230,9 +230,9 @@ span.close-btn img {
     min-height: 100px;
 }
 .featured_item .metadata_bottom .col {
-    width: 39%; 
-    margin-left: 0; 
-    margin-right: 10px; 
+    width: 39%;
+    margin-left: 0;
+    margin-right: 10px;
     min-height: 110px;
     border-bottom: 2px solid #cccecf;
 }
@@ -240,7 +240,7 @@ span.close-btn img {
     border-bottom: 2px solid #fce3c4;
 }
 .featured_item .metadata_bottom .activity-link {
-    width: 13%; 
+    width: 13%;
     min-height: 95px;
     border-bottom: 2px solid #cccecf;
     padding-top: 15px;
@@ -507,9 +507,9 @@ button.search_btn {
 }
 
 /* details & collections */
-.activity_detail .summary, .collection_detail .summary, .list_detail .summary { 
+.activity_detail .summary, .collection_detail .summary, .list_detail .summary {
     font-size: 14px;
-    color: #F8B132; 
+    color: #F8B132;
     font-weight: bold;
 }
 .collection_detail .summary {
@@ -537,7 +537,9 @@ button.search_btn {
 /*.activity_detail .section .text p, .activity_detail .section .text ul, .activity_detail .section .text ol { font-weight: 500; }*/
 .activity_detail .section img {max-width: 545px; }
 
-.activity_detail .section.fulldesc h1, .activity_detail .section.fulldesc h2, .activity_detail .section.fulldesc h3 { color: #F8B132; font-size: 18px; font-weight: 500; border-top: solid 1px #F6E8CF; margin-top: 32px; padding-top: 12px; }
+.activity_detail .section h1,
+.activity_detail .section h2,
+.activity_detail .section h3 { color: #F8B132; font-size: 18px; font-weight: 500; border-top: solid 1px #F6E8CF; margin-top: 32px; padding-top: 12px; }
 
 #disqus_thread { margin-top: 80px; }
 
@@ -570,7 +572,7 @@ button.search_btn {
     text-decoration: underline;
 }
 .footer_left {
-    float: left; 
+    float: left;
     width: 30%;
 }
 .footer_right {
@@ -578,12 +580,12 @@ button.search_btn {
     width: 70%;
 }
 .footer_nav {
-    float: left; 
+    float: left;
     width: 50%;
 }
 .footer_profiles {
     margin-top: 260px;
-    padding-bottom: 40px; 
+    padding-bottom: 40px;
 }
 
 /* big icons */
@@ -600,7 +602,7 @@ button.search_btn {
 }
 
 
-/* sponsors */ 
+/* sponsors */
 
 .sponsor-list {
     float: right;
@@ -631,7 +633,7 @@ a.europlanet {
     margin-bottom: 10px;
 }
 .contact-content, .contact-thumb {
-    min-height: 150px; 
+    min-height: 150px;
     padding: 30px 0;
     float: left;
 }
@@ -701,6 +703,6 @@ a.europlanet {
 }
 
 .award_badge {
-    display: block; 
+    display: block;
     margin-bottom: 40px;
 }

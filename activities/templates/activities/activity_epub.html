@@ -1,7 +1,7 @@
 {% spaceless %}
 {% load static %}
 {% load i18n %}
-{% load markdown %}
+{% load martortags %}
 {% load getattribute %}
 {% load relativise_img_src %}
 {% endspaceless %}<?xml version="1.0"?>
@@ -30,11 +30,11 @@
 	</dl>
 
 	{% for section in sections %}
-		{% include 'activities/activity_epub_section.html' with code=section.0 text=section.1 content=object|getattribute:section.0|markdown|relativise_img_src:object %}
+		{% include 'activities/activity_epub_section.html' with code=section.0 text=section.1 content=object|getattribute:section.0|safe_markdown|relativise_img_src:object %}
 	{% endfor %}
 
 
-	<div class="disclaimer">{{ object.get_footer_disclaimer|markdown }}</div>
+	<div class="disclaimer">{{ object.get_footer_disclaimer|safe_markdown }}</div>
 
 
 </body>

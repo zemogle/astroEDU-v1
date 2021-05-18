@@ -256,13 +256,15 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
     class Meta(PublishingModel.Meta):
         ordering = ['-code']
         verbose_name_plural = 'activities'
+        app_label = 'activities'
 
 
 class ActivityTranslation(TranslatedFieldsModel):
     master = models.ForeignKey(Activity, related_name='translations', null=True, on_delete=models.CASCADE)
     slug = AutoSlugField(max_length=200, populate_from='title', always_update=True, unique=False)
     title = models.CharField(max_length=255, db_index=True, verbose_name='Activity title', help_text='Title is shown in browser window. Use a good informative title, since search engines normally display the title on their result pages.')
-    teaser = models.TextField(blank=False, help_text='250 words', verbose_name='Abstract')
+    teaser = models.TextField(blank=False, help_text='250 chars', verbose_name='Teaser')
+    abstract = models.TextField(blank=True, help_text='250 chars', verbose_name='Abstract')
     theme = models.CharField(blank=False, max_length=40, help_text='Use top level AVM metadata')
     keywords = models.TextField(blank=False, help_text='List of keywords, separated by commas')
 

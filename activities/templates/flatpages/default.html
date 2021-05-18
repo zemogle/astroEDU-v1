@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load markdown %}
+{% load martortags %}
 {% load i18n %}
 {% load static %}
 
@@ -9,7 +9,7 @@
 {% block content %}
 <div class="layout_content"><div class="layout_container"><div class="layout_flatpage">
 	<h1>{{ flatpage.title }}</h1>
-	{{ flatpage.content|safe }}
+	{{ flatpage.content|safe_markdown }}
 </div></div></div>
 
 {% endblock %}

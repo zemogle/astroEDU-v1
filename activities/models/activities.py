@@ -33,6 +33,7 @@ def get_translated_file_path_step(instance, filename):
 
 
 ACTIVITY_SECTIONS = (
+    ('abstract', 'Summary'),
     ('goals', 'Goals'),
     ('objectives', 'Learning Objectives'),
     ('evaluation', 'Evaluation'),
@@ -264,7 +265,7 @@ class ActivityTranslation(TranslatedFieldsModel):
     slug = AutoSlugField(max_length=200, populate_from='title', always_update=True, unique=False)
     title = models.CharField(max_length=255, db_index=True, verbose_name='Activity title', help_text='Title is shown in browser window. Use a good informative title, since search engines normally display the title on their result pages.')
     teaser = models.TextField(blank=False, help_text='250 chars', verbose_name='Teaser')
-    abstract = models.TextField(blank=True, help_text='250 chars', verbose_name='Abstract')
+    abstract = models.TextField(blank=True, help_text='200 words', verbose_name='Abstract')
     theme = models.CharField(blank=False, max_length=40, help_text='Use top level AVM metadata')
     keywords = models.TextField(blank=False, help_text='List of keywords, separated by commas')
 

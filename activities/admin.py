@@ -85,6 +85,7 @@ class ActivityAdminForm(TranslatableModelForm):
             'supervised': forms.RadioSelect,
             'cost': forms.RadioSelect,
             'location': forms.RadioSelect,
+            'teaser': forms.TextInput(attrs={'class': 'vTextField'}),
         }
 
     def clean_code(self):
@@ -143,7 +144,6 @@ class ActivityAdmin(TranslatableAdmin):
 
     inlines = [AuthorInstitutionInline, ActivityAttachmentInline, ActivityLanguageAttachmentInline, RepositoryEntryInline, MembershipInline, LinkInline]
 
-    # activities is shared model, but on astroedu is needed modified fieldset
     fieldsets = [
         (None,
          {'fields': ('code', 'title',)}),
@@ -161,7 +161,7 @@ class ActivityAdmin(TranslatableAdmin):
 
         ('Description',
          {'fields': (
-             'teaser', 'materials', 'goals', 'objectives', 'evaluation', 'background',)}),
+             'teaser', 'abstract', 'materials', 'goals', 'objectives', 'evaluation', 'background',)}),
         (None,
          {'fields': ('fulldesc', 'short_desc_material')}),
         (None,

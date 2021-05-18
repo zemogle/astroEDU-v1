@@ -7,6 +7,7 @@ RUN apt-get update && \
 COPY requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 COPY . /app
+RUN python manage.py migrate --noinput
 RUN python manage.py collectstatic --noinput
 RUN python manage.py compilemessages
 CMD uwsgi --module=astroedu.wsgi --http=0.0.0.0:80

@@ -15,7 +15,7 @@ easy_thumbnails==2.7.1
 beautifulsoup4==4.9.3
 bleach==3.3.0
 rtfunicode==2.0
-html5lib==0.9999999  # the latest html5lib==0.999999999 install fails
+html5lib==1.1
 WeasyPrint==52.5
 django-weasyprint==1.1.0
 

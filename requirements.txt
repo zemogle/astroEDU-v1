@@ -20,4 +20,4 @@ WeasyPrint==52.5
 django-weasyprint==1.1.0
 
 unicodecsv==0.14.1
-martor==1.6.2
+martor==1.6.3

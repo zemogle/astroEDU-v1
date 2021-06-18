@@ -152,12 +152,10 @@ class ActivityAdmin(TranslatableAdmin):
         (None,
          {'fields': (
              ('age', 'level',), ('time', 'group', 'supervised', 'cost',), ('location', 'skills', 'learning',),
-             'suitable_group_size', 'max_number_at_once',
-             'keywords', 'affiliation', 'country', 'email', 'original_author', 'language')}),
-        ('Content Area focus',
-         {'fields': ('content_area_focus', )}),
-        ('Specific Content Category/s',
-         {'fields': ('astronomical_scientific_category', 'earth_science_keyword', 'space_science_keyword', 'other_keyword')}),
+             'keywords', 'original_author')}),
+
+        ('Content Categories',
+         {'fields': ('astronomical_scientific_category',)}),
 
         ('Description',
          {'fields': (

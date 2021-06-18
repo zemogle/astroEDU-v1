@@ -38,25 +38,15 @@ class PersonAdminForm(forms.ModelForm):
 
     class Meta:
         model = Person
-        fields = ('name', 'citable_name', 'email', 'institution', 'spaceawe_partner', 'spaceawe_node', )
+        fields = ('name', 'citable_name', 'email', 'institution',)
 
-    def clean(self):
-        cleaned_data = super().clean()
-
-        institution = cleaned_data.get('institution')
-        spaceawe_partner = cleaned_data.get('spaceawe_partner')
-        spaceawe_node = cleaned_data.get('spaceawe_node')
-        if (spaceawe_partner or spaceawe_node) and not institution:
-            raise forms.ValidationError('Please fill in the institution (required for Space Awareness partners/nodes)')
-
-        return cleaned_data
 
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     form = PersonAdminForm
-    list_display = ('name', 'citable_name', 'email', 'institution', 'spaceawe_partner', 'spaceawe_node')
-    list_editable = ('citable_name', 'email', 'spaceawe_partner', 'spaceawe_node', )
+    list_display = ('name', 'citable_name', 'email', 'institution',)
+    list_editable = ('citable_name', 'email', )
 
 
 class LocationAdminForm(forms.ModelForm):

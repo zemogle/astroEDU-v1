@@ -60,8 +60,6 @@ class Person(models.Model):
     citable_name = models.CharField(blank=True, max_length=255, help_text='Required for astroEDU activities')
     email = models.EmailField(blank=False, max_length=255)
     institution = models.ForeignKey(Institution, blank=True, null=True, on_delete=models.CASCADE)
-    spaceawe_partner = models.BooleanField(default=False, verbose_name='Space Awareness partner')
-    spaceawe_node = models.BooleanField(default=False, verbose_name='Space Awareness node')
 
     class Meta:
         ordering = ['name']

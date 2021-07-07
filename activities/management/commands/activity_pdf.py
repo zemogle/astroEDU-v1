@@ -17,16 +17,15 @@ class Command(BaseCommand):
         # Positional arguments
         parser.add_argument('--code', help='Four digit code (YYnn) of the article, will replace existing PDFs unless used with --new')
         parser.add_argument('--lang', help='Language of the article')
-        parser.add_argument(
-            '--new',
-            action='store_true',
-            help='Generate PDFs for new activities',
-        )
+        parser.add_argument('--new', action='store_true', help='Generate PDFs for new activities')
+        parser.add_argument('--all', action='store_true', help='(Re-)Generate PDFs for all activities')
 
 
     def handle(self, *args, **options):
         if options['new'] and not options['code']:
             versions = ActivityTranslation.objects.filter(Q(pdf='')|Q(pdf=False), master__published=True).order_by('-master__creation_date')
+        elif options['all']:
+            versions = ActivityTranslation.objects.filter(master__published=True).order_by('-master__creation_date')
         elif options['code']:
             try:
                 a = Activity.objects.get(code=options['code'])

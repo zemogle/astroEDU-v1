@@ -67,13 +67,6 @@ ACTIVITY_METADATA = (
     ('astronomical_categories', 'Astronomy Categories',
      {'display': 'astronomical_categories',
       'multiple': True}),
-    ('earth_science_keyword', 'Earth Science keywords',
-     {'display': 'astronomical_categories',
-      'multiple': True}),
-    ('space_science_keyword', 'Space Science keywords',
-     {'display': 'astronomical_categories',
-      'multiple': True}),
-
 )
 
 METADATA_OPTION_CHOICES = [(x[0], x[1]) for x in ACTIVITY_METADATA]
@@ -130,7 +123,7 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
     # version 9
     original_author = models.ForeignKey(Person, blank=True, null=True, verbose_name='Original Author of the activity (if not the authors listed above', on_delete=models.CASCADE)
 
-    astronomical_scientific_category = models.ManyToManyField(MetadataOption, related_name='+', limit_choices_to={'group': 'astronomical_categories'}, verbose_name='Astronomical Scientific Categories', blank=True)
+    astronomical_categories = models.ManyToManyField(MetadataOption, related_name='+', limit_choices_to={'group': 'astronomical_categories'}, verbose_name='Astronomical Scientific Categories', blank=True)
 
     objects = ActivityManager()
 

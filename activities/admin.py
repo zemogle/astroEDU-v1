@@ -155,7 +155,7 @@ class ActivityAdmin(TranslatableAdmin):
              'keywords', 'original_author')}),
 
         ('Content Categories',
-         {'fields': ('astronomical_scientific_category',)}),
+         {'fields': ('astronomical_categories',)}),
 
         ('Description',
          {'fields': (

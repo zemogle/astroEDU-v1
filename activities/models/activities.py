@@ -5,6 +5,7 @@ import io
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.contrib.staticfiles import finders
+from django.contrib.sites.models import Site
 from django.core.files.storage import default_storage
 from django.db import models
 from django.template.loader import render_to_string
@@ -223,7 +224,7 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         return '%s' % (self.code)
 
     def get_absolute_url(self):
-        return reverse('activities:detail-code', kwargs={'code': self.code, })
+        return "https://{}{}".format(Site.objects.get(id=1).domain,reverse('activities:detail-code', kwargs={'code': self.code, }))
 
     def get_short_url_full(self):
         if settings.SHORT_NAME == 'astroedu':

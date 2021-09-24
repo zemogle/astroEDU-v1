@@ -1,6 +1,3 @@
-========
-
-=======
 astroEDU - Peer-reviewed astronomy education activities
 ========
 
@@ -28,4 +25,4 @@ Contact
 -------
 
 astroEDU is a project of the International Astronomical Union under the framework of the IAU Office of Astronomy for Development.
-Email: astroedu@strw.leidenuniv.nl
+Email: astroedu@astro4edu.org

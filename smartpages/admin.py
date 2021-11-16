@@ -14,9 +14,9 @@ class SmartPageAdmin(TranslatableAdmin):
         (None, {'fields': ('code', 'url', 'title', 'content', 'release_date' )}),
     )
 
-    list_display = ('title', 'all_languages_column', )
+    list_display = ('title', 'all_languages_column', 'code' )
     search_fields = ('title', )
-    readonly_fields = ('code', )
+    # readonly_fields = ('code', )
 
 
 

@@ -139,9 +139,15 @@ span.close-btn img {
     text-decoration: none;
     display: inline-block;
 }
+
 .top_right {
-    float: right;
-    margin-top: 28px;
+      margin-top: 28px;
+      float:right;
+}
+
+.top_right_item {
+    display: table-cell;
+    vertical-align: middle;
 }
 .top_right a {
     padding-left: 30px;

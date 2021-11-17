@@ -1,12 +1,11 @@
-{% load i18n %}{% load static %}
-	<div class="layout_featured">
-		<div class="layout_container">
+{% load i18n static %}
+  <div class="layout_featured">
+  <div class="container">
 			<h2>{% trans "Featured Activities" %}</h2>
-			<div>
+			<div class="columns">
 				{% for object in featured %}
 					{% include 'featured_item.html' %}
 				{% endfor %}
 			</div>
-			<div style="clear: both"></div>
-		</div>
-	</div>
+    </div>
+    </div>

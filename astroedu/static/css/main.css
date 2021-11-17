@@ -156,12 +156,7 @@ span.close-btn img {
     float: left;
     margin-top: 36px;
 }
-.top_search {
-    float: right; margin-top: 38px;
-}
-.top_right_search a {
-    float: right; padding-left: 30px; margin-top: 28px;
-}
+
 .layout_content {
     margin-top: 172px;
     background-color: #F6F6F6;
@@ -667,8 +662,6 @@ a.europlanet {
 .section_meta:nth-child(2n+1) { border-right-color: #6C6C70; }
 .section_meta_inner { border-bottom: solid 1px #F2E2C6; padding-top: 10px; padding-bottom: 10px; }
 .section_meta:nth-child(2n+1) .section_meta_inner { border-bottom-color: #DADBDB; }
-.section_meta .icon { float: left; }
-.section_meta .text { float: left; margin-left: 35px; width: 215px; }
 .section_meta .icon img { width: 60px; height: 60px; }
 .section_meta .title_text { font-size: 11px; font-weight: bold; text-transform: uppercase; }
 .section_meta .content { margin-top: 8px; font-size: 13px; font-weight: bold; color: #F8B132; }

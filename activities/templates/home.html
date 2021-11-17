@@ -3,51 +3,62 @@
 {% get_current_language as LANGUAGE_CODE %}
 HOME
 {{ LANGUAGE_CODE}}
+
 {% block top %}
+  <div class="container">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="{% static 'designimages/astroedu_logo.png' %}" class="logo" alt="astroEDU Logo" />
+      </a>
 
-	<div class="layout_top">
-		<div class="layout_container" style="display: table;">
-      <div style="display: table-row;">
-			<div class="top_left">
-				<img src="{% static 'designimages/astroedu_logo.png' %}" class="logo" alt="astroEDU logo" />
-			</div>
-        <div class="top_right">
-        <div class="top_right_item">
-				<a href="http://astro4dev.org" target="_blank">
-					<img src="{% static 'designimages/iau_logo.png' %}" alt="IAU logo" title="Office of Astronomy for Development project" />
-				</a>
-        </div>
-        <div class="top_right_item">
-				<a href="/volunteer" target="_blank">
-					<img src="
-					{% if LANGUAGE_CODE == 'en' %}
-						{% static 'designimages/volunteer_badge.png' %}
-					{% elif LANGUAGE_CODE == 'it' %}
-						{% static 'designimages/unisciti_a_noi_volontari.png' %}
-					{% endif %}
-  					" alt="{% trans "apply as volunteer"%}" title="{% trans "Join us" %}: {% trans "Volunteer"%}!" />
-				</a>
-        </div>
-        <div class="top_right_item">
-        <a href="{% smartpage_url 'editor-advert' %}" style="font-size:1.1em;">
-          WE ARE<br/><strong>HIRING</strong>!
-        </a>
-        </div>
-        </div>
-			</div>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
-		</div>
-	</div>
-
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a href="http://astro4dev.org" target="_blank">
+            <img src="{% static 'designimages/iau_logo.png' %}" alt="IAU logo" title="Office of Astronomy for Development project" />
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a href="/volunteer" target="_blank">
+  					<img src="
+  					{% if LANGUAGE_CODE == 'en' %}
+  						{% static 'designimages/volunteer_badge.png' %}
+  					{% elif LANGUAGE_CODE == 'it' %}
+  						{% static 'designimages/unisciti_a_noi_volontari.png' %}
+  					{% endif %}
+    					" alt="{% trans "apply as volunteer"%}" title="{% trans "Join us" %}: {% trans "Volunteer"%}!" />
+  				</a>
+        </div>
+        <div class="navbar-item">
+          <a href="{% smartpage_url 'editor-advert' %}" style="font-size:1.1em;">
+            WE ARE<br/><strong>HIRING</strong>!
+          </a>        </div>
+      </div>
+    </div>
+  </nav>
+</div>
 {% endblock %}
 
 
-{% block content %}
+{% block fullcontent %}
 
-	<div class="layout_search">
-		<div class="home_slogan"><strong>{% trans "Peer-reviewed" %}</strong> {% trans "astronomy education activities" %}</div>
-		<div class="home_search_box">{% include 'search_form.html' %}</div>
-	</div>
+<section class="hero medium">
+  <div class="hero-body">
+    <div class="home_slogan"><strong>{% trans "Peer-reviewed" %}</strong> {% trans "astronomy education activities" %}</div>
+
+    <div class="home_search_box">{% include 'search_form.html' %}</div>
+
+  </div>
+</section>
+
 
 	{% include 'featured.html' %}
 

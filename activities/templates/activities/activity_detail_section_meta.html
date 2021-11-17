@@ -2,12 +2,13 @@
 {% load i18n %}
 
 		{% if content %}
-		<div class="section_meta"><div class="section_meta_inner">
-			<div class="icon"><img src="{% static 'designimages/sections-grey/'|add:code|add:'.svg' %}" alt="" /></div>
-			<div class="text">
-				<div class="title_text">{% trans text %}</div>
-				<div class="content">{{ content }}</div>
-			</div>
-			<div style="clear: both"></div>
-		</div></div>
+		<div class="section_meta">
+      <div class="section_meta_inner">
+  			<div class="icon is-large"><img src="{% static 'designimages/sections-grey/'|add:code|add:'.svg' %}" alt="" /></div>
+  			<div class="text">
+  				<div class="title_text">{% trans text %}</div>
+  				<div class="content">{{ content }}</div>
+  			</div>
+  		</div>
+    </div>
 		{% endif %}

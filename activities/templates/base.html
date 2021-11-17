@@ -13,15 +13,9 @@
 <title>{% block site_title %}astroEDU{% endblock %}</title>
 
 <link href="{% static 'css/fonts.css' %}" rel="stylesheet" />
-<link href="{% static 'css/reset.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 <link href="{% static 'css/main.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_1280.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_1080.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_992.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_1280.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_768.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_600.css' %}" rel="stylesheet" />
-<link href="{% static 'css/media_480.css' %}" rel="stylesheet" />
+<link href="{% static 'css/astroedu-styles.css' %}" rel="stylesheet" />
 
 
 {% block extra_head %}{% endblock %}
@@ -33,44 +27,59 @@
 		<p>{% trans "This site uses cookies to offer you a better browsing experience." %} <a href="{% smartpage_url 'cookie-policy' %}" title="">{% trans "Read about how we use cookies." %}</a></p>
 	</div>
 </div>
-<div class="body_wrap">
+<div id="page-wrapper">
 
+<header>
 {% block top %}
-	<div class="layout_top">
+  <div class="container">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="{% static 'designimages/astroedu_logo.png' %}" class="logo" alt="astroEDU Logo" />
+      </a>
 
-		<div class="layout_container" style="position: relative;">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
-			<div class="top_left">
-				<a href="{% url 'home' %}">
-					<img src="{% static 'designimages/astroedu_logo.png' %}" class="logo" alt="astroEDU Logo" />
-				</a>
-			</div>
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a href="/volunteer" target="_blank">
+  					<img src="
+  					{% if LANGUAGE_CODE == 'en' %}
+  						{% static 'designimages/volunteer_badge.png' %}
+  					{% elif LANGUAGE_CODE == 'it' %}
+  						{% static 'designimages/unisciti_a_noi_volontari.png' %}
+  					{% endif %}
+    					" alt="{% trans "apply as volunteer"%}" title="{% trans "Join us" %}: {% trans "Volunteer"%}!" />
+  				</a>
+        </div>
+        <div class="navbar-item">
+          <div class="top_search">{% include 'search_form.html' %} </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+{% endblock %}
+</header>
 
-			<div class="top_right_search">
-				<a href="/volunteer" target="_blank">
-					<img src="
-					{% if LANGUAGE_CODE == 'en' %}
-						{% static 'designimages/volunteer_badge.png' %}
-					{% elif LANGUAGE_CODE == 'it' %}
-						{% static 'designimages/unisciti_a_noi_volontari.png' %}
-					{% endif %}
-  					" alt="{% trans "apply as volunteer"%}" title="{% trans "Join us" %}: {% trans "Volunteer"%}!" />
-				</a>
-				<div class="top_search">{% include 'search_form.html' %} </div>
-			</div>
-			<div style="clear: both"></div>
-			<div class="curvy_bg"></div>
-
-		</div>
-	</div>
-
+{% block fullcontent %}
+<section class="section">
+  <div class="container">
+{% block content %}{% endblock %}
+  </div>
+</section>
 {% endblock %}
 
-{% block content %}{% endblock %}
-	<div class="layout_resources">
-		<div class="layout_container">
-
-			<div class="bigicon">
+	<section class="section layout_resources">
+		<div class="container">
+      <div class="columns">
+			<div class="column bigicon">
 				<a href="{% url 'collections:list' %}">
 					<img src="
 					{% if LANGUAGE_CODE == 'en' %}
@@ -82,7 +91,7 @@
 				</a>
 			</div>
 
-			<div class="bigicon">
+			<div class="column bigicon">
 				<a href="{% url 'activities:list' %}">
 					<img src="
 					{% if LANGUAGE_CODE == 'en' %}
@@ -94,7 +103,7 @@
 				</a>
 			</div>
 
-			<div class="bigicon">
+			<div class="column bigicon">
 				<a href="{% smartpage_url 'submission' %}">
 					<img src="
 					{% if LANGUAGE_CODE == 'en' %}
@@ -106,13 +115,13 @@
 				</a>
 			</div>
 
-			<div style="clear: both;"></div>
+			</div>
 
 		</div>
-	</div>
+	</section>
 
-	<div class="layout_footer">
-		<div class="layout_container">
+	<footer class="footer">
+		<div class="container">
 		<div class="footer_left">
 
 			<div class="footer_nav">
@@ -146,7 +155,6 @@
 					<li><a href="{% smartpage_url 'contact' %}">{% trans "Contact" %}</a></li>
 				</ul>
 			</div>
-		<div style="clear: both"></div>
 		</div>
 
 		<div class="footer_right">
@@ -169,7 +177,6 @@
 				</ul>
 			</div>
 		</div>
-		<div style="clear: both"></div>
 		<!--
 		<div style="margin-top: 50px; ">
 			<a href="mailto:astroedu@strw.leidenuniv.nl?subject=Help+us+improve">
@@ -180,13 +187,12 @@
 		<div class="footer_profiles">
 			<a href="https://www.facebook.com/iauastroedu"><img src="{% static 'designimages/sections-orange/social_facebook.svg' %}" alt="astroEDU on Facebook" /></a>
 			&nbsp;
-			<a href="http://gplus.to/astroEDU"><img src="{% static 'designimages/sections-orange/social_google.svg' %}" alt="astroEDU on Google+" /></a>
-			&nbsp;
 			<a href="https://twitter.com/IAUastroEDU"><img src="{% static 'designimages/sections-orange/social_twitter.svg' %}" alt="astroEDU on Twitter" /></a>
 		</div>
-	</div></div>
-
+	</div>
+</footer>
 </div>
+
 <script type="text/javascript"  src="{% static 'js/jquery.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>,
 <script type="application/javascript">
@@ -208,6 +214,18 @@
 
   ga('create', 'UA-44947668-1', 'iau.org');
   ga('send', 'pageview');
+
+  $(document).ready(function() {
+
+  // Check for click events on the navbar burger icon
+  $(".navbar-burger").click(function() {
+
+      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+      $(".navbar-burger").toggleClass("is-active");
+      $(".navbar-menu").toggleClass("is-active");
+
+  });
+});
 </script>
 </body>
 </html>

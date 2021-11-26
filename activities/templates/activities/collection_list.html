@@ -5,25 +5,21 @@
 
 {% block content %}
 
-<div class="layout_content">
-	<div class="layout_container">
-		<div class="layout_wide">
-			<h2>{% trans "Activity Collections" %}</h2>
+			<h2 class="featured">{% trans "Activity Collections" %}</h2>
 
 			{% if object_list %}
-			<div class="archives_list">
+      <div class="columns is-multiline">
 			    {% for object in object_list %}
+            <div class="column is-one-third">
 			    	{% include 'activities/collection_list_item.html' %}
+            </div>
 			    {% endfor %}
-				<div style="clear: both"></div>
-			</div>
+      </div>
 			{% else %}
 			    <p>{% trans "No collections are available." %}</p>
 			{% endif %}
 
-		</div>
-	</div>
-</div>
+
 
 
 {% endblock %}

@@ -14,8 +14,8 @@ page.next_page_number
 
 {% block content %}
 
-<div class="layout_content"><div class="layout_container"><div class="layout_leftcolumn">
-
+<div class="columns">
+  <div class="column is-half">
     <form action="" method="get" id="search_form" style="display:none;">{{ form }}<input type="submit" value="Submit" /></form>
 
     {% if query %}
@@ -40,9 +40,11 @@ page.next_page_number
     {% else %}
     <p class="notfound"><img src="{% static 'designimages/search_notfound.svg' %}" alt="" /> {% trans 'No results found!' %}</p>
     {% endif %}
+    </div>
 
+</div>
 
-</div><div class="layout_rightcolumn">
+<div class="column">
 
 
 {% if query %}
@@ -64,8 +66,8 @@ page.next_page_number
     <!-- End faceting -->
 {% endif %}
 
-</div><div style="clear: both;">
-</div></div></div>
+</div>
+
 
 {% if featured %}
     {% include 'featured.html' %}

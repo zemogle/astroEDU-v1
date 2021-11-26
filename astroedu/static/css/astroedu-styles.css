@@ -1,5 +1,5 @@
 /* base */
-body, p, td, th, ul, ol, input, textarea { font-family: 'Gotham', sans-serif; color: #666666; font-size: 14px; font-weight: 500; }
+body, p, td, th, ul, ol, input, textarea { font-family: 'Gotham', sans-serif; color: #666666; font-size: 16px; font-weight: 500; }
 h1, h2, h3, h4 { margin-top: 2.70em; margin-bottom: 1.35em; }
 p, ul, ol { line-height: 1.35em; }
 p { margin-top: 1.35em; margin-bottom: 1.35em; }
@@ -44,6 +44,12 @@ header nav {
     display: inline-block;
     margin: 160px 0 0 25px;
 }
+
+::placeholder{
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
 .hero {
     background-image: url("../designimages/home_search_bg.png");
     background-repeat: no-repeat;
@@ -78,7 +84,7 @@ header nav {
     background-color: #FFFFFF; /*#F8B132;*/
     padding-bottom: 100px;
 }
-.layout_featured h2, .layout_wide h2 {
+.layout_featured h2, .layout_wide h2, h2.featured {
     color: #F8B132;
     font-size: 28px;
     padding-top: 36px;
@@ -118,7 +124,7 @@ header nav {
     background: #f8b132;
 }
 .activity_list_item .description {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
 .video_wrapper {
@@ -163,12 +169,12 @@ header nav {
 }
 .activity_list_item .metadata_bottom {
     margin-top: 44px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
 .activity_list_item .metadata_bottom .caption {
     margin-top: 16px;
-    font-size: 11px;
+    font-size: 12px;
     text-transform: uppercase;
 }
 .activity_list_item .metadata_bottom .value {
@@ -199,12 +205,13 @@ header nav {
     margin-bottom: 24px;
 }
 .featured_item .description {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
+.list_item .metadata_bottom,
 .featured_item .metadata_bottom {
     margin-top: 44px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     display:flex;
 }
@@ -254,12 +261,10 @@ header nav {
     background: #f8b132;
 }
 .list_item .description {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
 }
-.list_item .metadata_bottom {
-    display: inline-block;
-}
+
 .list_item .metadata_bottom .theme_col,
 .list_item .metadata_bottom .link_col {
     border-bottom: 2px solid #cccecf;
@@ -301,12 +306,6 @@ header nav {
     font-weight: 500;
     margin-top: 20px;
 }
-.list_item .metadata_bottom {
-    width: 100%;
-    margin-top: 44px;
-    font-size: 12px;
-    font-weight: bold;
-}
 .list_item .metadata_bottom .caption {
     margin-top: 16px;
     font-size: 11px;
@@ -321,6 +320,10 @@ header nav {
 
 .list_item .title a {
     color: #f8b132;
+}
+
+.activity-link {
+  text-align: right;
 }
 
 /* background images */
@@ -399,6 +402,23 @@ button.search_btn {
     float: left;
 }
 
+/* details & collections */
+.activity_detail .summary, .collection_detail .summary, .list_detail .summary {
+    font-size: 14px;
+    color: #F8B132;
+    font-weight: bold;
+}
+.collection_detail .summary {
+    margin-top: 0px;
+    margin-bottom: 50px;
+    line-height: 1.35em;
+}
+.collection_footer {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    min-height: 80px;
+}
+
 /* meta */
 .meta { padding-top: 0px; }
 .section_meta {
@@ -438,7 +458,7 @@ button.search_btn {
     padding-top: 1px;
     height: 506px;
     color: #F6F6F6;
-    font-size: 12px;
+    font-size: 14px;
 }
 .layout_footer ul {
     color: #F6F6F6;
@@ -456,4 +476,42 @@ button.search_btn {
 .footer_profiles {
     margin-top: 260px;
     padding-bottom: 40px;
+}
+.footer_left {
+    float: left;
+    width: 30%;
+}
+.footer_right {
+    float: right;
+    width: 70%;
+}
+.footer_nav {
+    float: left;
+    width: 50%;
+}
+
+span.close-btn {
+    float: right;
+    cursor: pointer;
+}
+span.close-btn img {
+    width: 20px;
+    height: auto;
+}
+/* sponsors */
+
+.sponsor-list {
+    float: right;
+    text-align: right;
+}
+.sponsor-list ul, .sponsor-list li {
+    list-style: none;
+    display: inline;
+    margin: 0;
+}
+.sponsor-list li {
+    margin-left: 8px;
+}
+.sponsor-list li:first-child {
+    margin-left: 0;
 }

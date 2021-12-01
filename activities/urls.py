@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.ActivityListView.as_view(), name='list'),
     path('feed/', views.ActivityFeed(), name='feed'),
+    path('ads/', views.AdsActivityList.as_view(), name='ads'),
     path('<int:code>/', views.ActivityDetailView.as_view(), name='detail-code'),
     path('<int:code>/print-preview/', views.ActivityDetailPrintView.as_view(), name='print-preview'),
 

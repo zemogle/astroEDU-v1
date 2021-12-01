@@ -1,5 +1,4 @@
 import re
-import logging
 
 from django import template
 from django.utils.safestring import mark_safe
@@ -9,8 +8,6 @@ from easy_thumbnails.files import get_thumbnailer
 from django.core.files.storage import default_storage
 
 register = template.Library()
-
-logger = logging.getLogger('django')
 
 def _relativise(value, activity, constraint=None):
     new_start = 0

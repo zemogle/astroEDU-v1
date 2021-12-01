@@ -224,3 +224,11 @@ class CollectionDetailView(TranslatableSlugMixin, DetailView):
     # template_name = 'activities/collection_detail.html'
     # slug_field = 'slug'
     slug_url_kwarg = 'collection_slug'
+
+class AdsActivityList(ListView):
+    model = Activity
+    template_name = "activities/activity_list_ads.html"
+
+    def get_queryset(self):
+        qs = _activity_queryset(self.request)
+        return qs.filter(published=True)

@@ -232,8 +232,16 @@ class Activity(TranslatableModel, PublishingModel, SpaceaweModel, SearchModel):
         else:
             return None
 
+    def get_absolute_pdf(self):
+        return "https://{}/{}".format(Site.objects.get(id=1).domain,self.pdf)
+
+
     def get_footer_disclaimer(self):
         return 'Go to %s for additional resources and download options of this activity.' % self.get_short_url_full()
+
+    @property
+    def bibcode(self):
+        return f"{self.creation_date.year}AEdu....1.{self.code}{self.citable_author_list()[0]}"
 
     class Meta(PublishingModel.Meta):
         ordering = ['-code']

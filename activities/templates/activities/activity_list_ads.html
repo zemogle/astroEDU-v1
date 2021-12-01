@@ -1,0 +1,27 @@
+{% load language_extra %}
+
+<html>
+<head></head>
+<body>
+<p>
+{% for activity in object_list %}
+{% if activity.is_released %}
+%R {{activity.bibcode}}<br/>
+%A {{activity.citable_author_list}}<br/>
+%J astroEDU<br/>
+%D {{activity.release_date|date:"m/Y"}}<br/>
+%T {{activity.title}}<br/>
+%I {%if activity.doi%}DOI: {{activity.doi}};{%endif%} PDF: {{activity.get_absolute_pdf}}; ELECTR: {{activity.get_absolute_url}}<br/>
+%M {{activity.language_code|language_long}}<br/>
+%K {{activity.keywords}}<br/>
+{% if activity.abstract %}
+%B {{activity.abstract}}<br/>
+{% else %}
+%B {{activity.teaser}}<br/>
+{% endif %}
+<br/>
+{% endif %}
+{% endfor%}
+</p>
+</body>
+</html>

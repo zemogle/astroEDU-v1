@@ -193,7 +193,7 @@ MEDIA_ROOT = os.path.join('/data/media/')
 
 THUMBNAIL_ALIASES = {
     '': {
-        'thumb': {'size': (334, 180), 'crop': True},
+        'thumb': {'size': (432, 233), 'crop': True},
         'thumb2': {'size': (500, 269), 'crop': True},
         'epubcover': {'size': (800,1066), 'crop': True},
         'logo': {'size': (180, 180), 'crop': 'scale'},

@@ -8,7 +8,7 @@
 {% if activity.is_released %}
 %R {{activity.bibcode}}<br/>
 %A {{activity.citable_author_list}}<br/>
-%J astroEDU<br/>
+%J astroEDU Educational Activity, id. {{activity.code}} <br/>
 %D {{activity.release_date|date:"m/Y"}}<br/>
 %T {{activity.title}}<br/>
 %I {%if activity.doi%}DOI: {{activity.doi}};{%endif%} PDF: {{activity.get_absolute_pdf}}; ELECTR: {{activity.get_absolute_url}}<br/>

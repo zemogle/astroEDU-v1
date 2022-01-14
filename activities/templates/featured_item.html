@@ -10,9 +10,7 @@
     {% thumbnail object.main_visual 'thumb' as im %}
 		<div class="image">
       <a href="{% url 'activities:detail-code' code=object.code %}">
-        <figure class="image">
           <img src="{{ im.url}}" alt="{{ object.title }} Activity" />
-        </figure>
       </a>
     </div>
 
